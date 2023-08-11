@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:itr_app/constants.dart';
+
 
 class ThemeChanger with ChangeNotifier{
   ThemeMode _themeMode = ThemeMode.light;
@@ -7,6 +9,7 @@ class ThemeChanger with ChangeNotifier{
 
   void setTheme(bool isDark){
     _themeMode = isDark? ThemeMode.dark:ThemeMode.light;
+    colorsBasedOnTheme(_themeMode);
     notifyListeners();
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:itr_app/constants.dart';
+import 'package:itr_app/view/screen/homepage.dart';
 
 class ShowLoginSuccessfulDialog extends StatelessWidget {
   const ShowLoginSuccessfulDialog({super.key});
@@ -22,7 +23,10 @@ class ShowLoginSuccessfulDialog extends StatelessWidget {
           ElevatedButton(
             style: ButtonStyle(minimumSize:MaterialStateProperty.all(Size(265,42))),
             onPressed: () {
-              Navigator.of(context).pop();
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const HomePage()));
             },
             child:Ink(
               decoration: BoxDecoration(

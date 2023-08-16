@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:itr_app/constants.dart';
+import 'package:itr_app/view/screen/select_person.dart';
 import 'package:itr_app/view/utils/drawer.dart';
 import 'package:itr_app/view/utils/floating_action_button.dart';
 
@@ -139,6 +140,12 @@ class HomePageListTile extends StatelessWidget {
             ]),
         child: Center(
           child: ListTile(
+            onTap: (){
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const SelectPerson()));
+            },
             title: Text(
               title,
               style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),

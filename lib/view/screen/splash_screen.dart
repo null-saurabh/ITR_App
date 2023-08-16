@@ -35,7 +35,7 @@ class VideoState extends State<Splash> with SingleTickerProviderStateMixin {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (context) => const HomePage()));
+              builder: (context) => const LoginPage()));
     }
   }
 

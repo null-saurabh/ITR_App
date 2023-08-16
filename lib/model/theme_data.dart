@@ -8,6 +8,7 @@ ThemeData lightTheme = ThemeData(
   colorScheme: const ColorScheme.light(
     primary: Colors.white,
     secondary: Colors.white,
+    tertiary: Colors.blue
 
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
@@ -33,6 +34,7 @@ ThemeData darkTheme = ThemeData(
   colorScheme: const ColorScheme.dark(
     primary: Color(0xFF293137),
     secondary: Colors.black,
+    tertiary: (Color(0xFF293137)),
   ),
     elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:itr_app/constants.dart';
+import 'package:itr_app/view/screen/otp_page.dart';
 
 
 class LoginPage extends StatelessWidget {
@@ -162,6 +163,10 @@ class _LoginBoxState extends State<LoginBox> {
                   ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const OtpPage()));
                       }
                     },
                     child: Ink(

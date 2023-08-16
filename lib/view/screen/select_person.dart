@@ -16,8 +16,8 @@ class SelectPerson extends StatefulWidget {
 class _SelectPersonState extends State<SelectPerson> {
   @override
   Widget build(BuildContext context) {
-    // print("1");
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.tertiary,
         title: const Text("Select Person"),

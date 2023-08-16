@@ -22,7 +22,7 @@ Color selectPersonPageTitleColor =  const Color(0xFF364756);
 Color selectPersonPageSubtitleColor =  const Color(0xFF4F687F);
 LinearGradient appBarColor = blueGradient;
 Color bottomSheetTextColor =Color(0xFF4F687F);
-Color cardExtensionColor = Color(0xFF1B7FDB).withOpacity(0.12);
+Color cardExtensionColor = Color(0xFF1B7FDB);
 
 
 void colorsBasedOnTheme(ThemeMode themeMode) {
@@ -53,7 +53,7 @@ void colorsBasedOnTheme(ThemeMode themeMode) {
     selectPersonPageSubtitleColor =  const Color(0xFF4F687F);
     appBarColor = blueGradient;
     bottomSheetTextColor =Color(0xFF4F687F);
-    Color cardExtensionColor = Color(0xFF1B7FDB).withOpacity(0.12);
+    cardExtensionColor = Color(0xFFF6FAFE);
 
 
   }

@@ -72,7 +72,9 @@ void showAddPersonBottomSheet(BuildContext context) {
                       keyboardType: TextInputType.number,
                     ),
                     const SizedBox(height: 40),
-                    ElevatedButton(onPressed: () {},
+                    ElevatedButton(onPressed: () {
+                      Navigator.pop(context);
+                    },
                       style: ButtonStyle(shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)))),child: Ink(
                       decoration: BoxDecoration(
                         gradient: blueGradient,

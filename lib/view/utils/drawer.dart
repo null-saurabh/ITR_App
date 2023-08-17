@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:itr_app/view/screen/homepage.dart';
+import 'package:itr_app/view/screen/login_page.dart';
 import 'package:itr_app/view_model/provider/theme_changer_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -42,7 +44,8 @@ class DrawerUi extends StatelessWidget {
               ),
             ),
           ),
-          const DrawerListTile(title:"Persons", icon: Icons.groups_outlined,),
+          DrawerListTile(title:"Persons", icon: Icons.groups_outlined,onTap:(){ Navigator.push(
+              context, MaterialPageRoute(builder: (context) => const HomePage())); }),
           const DrawerListTile(title:"Payment History", icon: Icons.history),
           const SizedBox(height: 20),
           const DrawerListTile(title:"Dark Mode", icon: Icons.dark_mode_outlined,widgetName: "Switch",),
@@ -63,18 +66,22 @@ class DrawerUi extends StatelessWidget {
 
 
 class DrawerListTile extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final Color color;
+  final String widgetName;
+  final VoidCallback? onTap;
+
   const DrawerListTile({
     super.key,
     required this.icon,
     required this.title,
     this.color = Colors.blue,
-    this.widgetName = "Arrow"
+    this.widgetName = "Arrow",
+    this.onTap
   });
 
-  final IconData icon;
-  final String title;
-  final Color color;
-  final String widgetName;
+
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +98,7 @@ class DrawerListTile extends StatelessWidget {
           },
         );
       }),
-      onTap: () {},
+      onTap: onTap,
     );
   }
 }

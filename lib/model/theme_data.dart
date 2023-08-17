@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:itr_app/constants.dart';
 
 ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
@@ -21,7 +20,8 @@ ThemeData lightTheme = ThemeData(
         )
       ),
       backgroundColor: MaterialStateProperty.all<Color>(Color(0xff48a2f5)),
-      minimumSize: MaterialStateProperty.all(Size(double.infinity, 50))
+        minimumSize: MaterialStateProperty.all(Size(double.infinity,50))
+
     )
   )
 );
@@ -45,7 +45,10 @@ ThemeData darkTheme = ThemeData(
                 )
             ),
             backgroundColor: MaterialStateProperty.all<Color>(Color(0xff48a2f5)),
-            minimumSize: MaterialStateProperty.all(Size(double.infinity, 50))
+          // maximumSize: MaterialStateProperty.all(Size(double.infinity,50))
+            minimumSize: MaterialStateProperty.all(Size(double.infinity,50))
+
+
         )
     )
 

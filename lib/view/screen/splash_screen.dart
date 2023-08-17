@@ -1,8 +1,5 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:itr_app/view/screen/homepage.dart';
 import 'package:itr_app/view/screen/login_page.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -15,15 +12,6 @@ class VideoState extends State<Splash> with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Animation<double> animation;
 
-
-
-  startTime() async {
-    // var sharedPref = await SharedPreferences.getInstance();
-    // isLoggedIn = sharedPref.getBool('onBoard');
-    var duration = const Duration(milliseconds: 2500);
-    return Timer(duration, navigationPage);
-  }
-
   void navigationPage() {
     if (isLoggedIn!) {
       Navigator.pushReplacement(
@@ -33,26 +21,31 @@ class VideoState extends State<Splash> with SingleTickerProviderStateMixin {
           ));
     } else {
       Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => const LoginPage()));
+          context, MaterialPageRoute(builder: (context) => const LoginPage()));
     }
   }
 
   @override
   void initState() {
     super.initState();
-    animationController =
-        AnimationController(vsync: this, duration: const Duration(milliseconds: 1500));
+    animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 1500));
     animation =
         CurvedAnimation(parent: animationController, curve: Curves.easeOut);
 
-    animation.addListener(() => setState(() {}));
     animationController.forward();
-    setState(() {});
-    startTime();
+    animationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        navigationPage();
+      }
+    });
   }
 
+  @override
+  void dispose() {
+    animationController.dispose(); // Dispose of the AnimationController
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,10 +57,15 @@ class VideoState extends State<Splash> with SingleTickerProviderStateMixin {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Image.asset(
-                'assets/images/loginimage.png',
-                width: animation.value * 250,
-                height: animation.value * 250,
+              AnimatedBuilder(
+                animation: animation,
+                builder: (BuildContext context, Widget? child) {
+                  return Image.asset(
+                    'assets/images/loginimage.png',
+                    width: animation.value * 250,
+                    height: animation.value * 250,
+                  );
+                },
               ),
             ],
           ),

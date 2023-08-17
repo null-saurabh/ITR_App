@@ -4,6 +4,7 @@ import 'package:itr_app/model/theme_data.dart';
 import 'package:itr_app/view/screen/otp_page.dart';
 import 'package:itr_app/view/screen/select_person.dart';
 import 'package:itr_app/view/screen/splash_screen.dart';
+import 'package:itr_app/view/screen/upload_document_page.dart';
 import 'package:itr_app/view_model/provider/theme_changer_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -33,7 +34,11 @@ class MyApp extends StatelessWidget {
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode:Provider.of<ThemeChanger>(context).themeMode,
-      home: const Splash(),
+      home: const UploadDocument(),
     );
   }
 }
+
+
+// theme changes
+// upload document

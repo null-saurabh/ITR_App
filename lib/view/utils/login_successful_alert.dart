@@ -21,7 +21,7 @@ class ShowLoginSuccessfulDialog extends StatelessWidget {
           const Text('Login Successful',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 22),),
           const SizedBox(height: 20.0),
           ElevatedButton(
-            style: ButtonStyle(minimumSize:MaterialStateProperty.all(Size(265,42))),
+            // style: ButtonStyle(minimumSize:MaterialStateProperty.all(Size(265,10))),
             onPressed: () {
               Navigator.push(
                   context,

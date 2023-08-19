@@ -93,7 +93,7 @@ class _LoginBoxState extends State<LoginBox> {
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
-            blurRadius: 7,
+            blurRadius: 1,
             offset: const Offset(0, 0), // changes position of shadow
           ),
         ],
@@ -108,7 +108,7 @@ class _LoginBoxState extends State<LoginBox> {
                 children: [
                   ShaderMask(
                     shaderCallback: (bounds) {
-                      return gradientColor(themeMode).createShader(bounds);
+                      return blueGradient.createShader(bounds);
                     },
                     child: const Text(
                       "LOGO",
@@ -173,7 +173,7 @@ class _LoginBoxState extends State<LoginBox> {
                     },
                     child: Ink(
                         decoration: BoxDecoration(
-                          gradient: gradientColor(themeMode),
+                          gradient: blueGradient,
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       child: Container(
@@ -182,7 +182,7 @@ class _LoginBoxState extends State<LoginBox> {
                           maxWidth: double.infinity,
                           minHeight: 50.0,
                         ),
-                      child: const Text('Log In',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),),
+                      child: const Text('Log In',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.white),),
                     ),
                   ),)
                 ],

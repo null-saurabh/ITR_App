@@ -3,7 +3,7 @@ import 'package:itr_app/view/utils/drawer.dart';
 import 'package:itr_app/view/utils/payment_history_card.dart';
 
 class PaymentHistory extends StatelessWidget {
-  static const List<bool> paymentStatusList = [true, false, true,false,false];
+  static const List<bool> paymentStatusList = [true, false, true,false,false,true];
 
   const PaymentHistory({Key? key}) : super(key: key);
 
@@ -12,7 +12,6 @@ class PaymentHistory extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
-      drawer: const DrawerUi(),
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.tertiary,
         title: const Text("Payment History"),

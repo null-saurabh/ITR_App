@@ -15,7 +15,6 @@ class OrderStatus extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
-      drawer: DrawerUi(),
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.tertiary,
         title: const Text("Order Status"),

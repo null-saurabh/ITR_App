@@ -23,8 +23,7 @@ class _SelectPersonState extends State<SelectPerson> {
         backgroundColor: Theme.of(context).colorScheme.tertiary,
         title: const Text("Select Person"),
       ),
-      drawer: const DrawerUi(),
-      bottomNavigationBar: BottomNavigationButton(text: "Add New Person",iconWidget: Icon(Icons.add_circle_outline,),elevation: true,onTap: () => showAddPersonBottomSheet(context)),
+      bottomNavigationBar: BottomNavigationButton(text: "Add New Person",icon: Icons.add_circle_outline,elevation: true,onTap: () => showAddPersonBottomSheet(context)),
       body: Consumer<ThemeChanger>(builder: (context, theme, _) {
         return Padding(
           padding: const EdgeInsets.only(top: 20.0, left: 15, right: 15),

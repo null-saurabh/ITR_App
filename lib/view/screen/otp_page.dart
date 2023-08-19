@@ -105,7 +105,7 @@ class _OtpPageBoxState extends State<OtpPageBox> {
           children: [
             ShaderMask(
               shaderCallback: (bounds) {
-                return gradientColor(themeMode).createShader(bounds);
+                return blueGradient.createShader(bounds);
               },
               child: const Text(
                 "LOGO",
@@ -161,7 +161,7 @@ class _OtpPageBoxState extends State<OtpPageBox> {
               },
               child: Ink(
                 decoration: BoxDecoration(
-                  gradient: gradientColor(themeMode),
+                  gradient: blueGradient,
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 child: Container(
@@ -170,7 +170,7 @@ class _OtpPageBoxState extends State<OtpPageBox> {
                     maxWidth: double.infinity,
                     minHeight: 50.0,
                   ),
-                  child: const Text('Log In',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),),
+                  child: const Text('Log In',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.white),),
                 ),
               ),)
           ],

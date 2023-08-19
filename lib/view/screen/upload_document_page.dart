@@ -45,7 +45,6 @@ class _UploadDocumentState extends State<UploadDocument> {
         backgroundColor: Theme.of(context).colorScheme.tertiary,
         title: const Text("Upload Documents"),
       ),
-      drawer: const DrawerUi(),
       bottomNavigationBar: BottomNavigationButton(text: "Submit",elevation: false,onTap:() =>  Navigator.push(
           context, MaterialPageRoute(builder: (context) => const OrderStatus(paymentStatus:false)))),
       body: Padding(

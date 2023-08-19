@@ -11,8 +11,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeMode = Theme.of(context).brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
+
     return Scaffold(
-      floatingActionButton:CustomFAB(),
+      floatingActionButton:const CustomFAB(),
       drawer: const DrawerUi(),
       body: Stack(
         children: [
@@ -22,7 +23,7 @@ class HomePage extends StatelessWidget {
                 flex: 6,
                 child: Container(
                   decoration: BoxDecoration(
-                    gradient: gradientColor(themeMode)
+                    gradient: blueGradient
                   ),
                   child: Column(
                     children: [
@@ -33,7 +34,7 @@ class HomePage extends StatelessWidget {
                         backgroundColor: Colors.transparent,
                       ),
                       const SizedBox(height: 20,),
-                      Image.asset("assets/images/mainimage.png",height: MediaQuery.of(context).size.height *0.3,width: MediaQuery.of(context).size.width *0.8,),
+                      Image.asset(homePageImage(themeMode),height: MediaQuery.of(context).size.height *0.3,width: MediaQuery.of(context).size.width *0.8,),
                     ],
                   ),
                 ),
@@ -58,7 +59,7 @@ class HomePage extends StatelessWidget {
                         0.9,
                     height: 265,
                     decoration: BoxDecoration(
-                      color: homePageContainerColor(themeMode),
+                      color: Theme.of(context).colorScheme.primary,
                       borderRadius: BorderRadius.circular(8),
                       boxShadow: [
                         BoxShadow(
@@ -83,7 +84,7 @@ class HomePage extends StatelessWidget {
                         ),
                         HomePageListTile(
                           title: "Start Income Tax\nFilling",
-                          image: "assets/images/startFillingImage.jpg",
+                          image: "assets/images/startFillingImage.png",
                           icon: Icon(Icons.navigate_next),
                           price: "₹599",
                         ),
@@ -92,7 +93,7 @@ class HomePage extends StatelessWidget {
                         ),
                         HomePageListTile(
                             title: "How It Works",
-                            image: "assets/images/questionMark.jpg",
+                            image: "assets/images/questionMark.png",
                             icon: Icon(Icons.navigate_next)),
                       ],
                     )),
@@ -124,18 +125,18 @@ class HomePageListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = Theme.of(context).brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
     return Padding(
       padding: const EdgeInsets.only(left: 25.0, right: 25),
       child: Container(
         height: 90,
         decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.primary,
+            color: homePageContainerColor(themeMode),
             borderRadius: BorderRadius.circular(8),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                // spreadRadius: 2,
-                blurRadius: 4,
+                color: Colors.blue.withOpacity(0.75),
+                blurRadius: 1,
                 offset: const Offset(0,0), // changes position of shadow
               ),
             ]),

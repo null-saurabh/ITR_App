@@ -4,11 +4,13 @@ import 'package:itr_app/view/utils/elevated_button_gradiant.dart';
 class BottomNavigationButton extends StatelessWidget {
   final String text;
   final Widget? iconWidget;
+  final IconData? icon;
   final bool elevation;
   final VoidCallback onTap;
   const BottomNavigationButton({
     super.key,
     this.iconWidget,
+    this.icon,
     required this.text,
     required this.onTap,
     required this.elevation
@@ -30,7 +32,7 @@ class BottomNavigationButton extends StatelessWidget {
               height: 50,
               child: ElevatedButton(
                 onPressed: onTap,
-                child: AppGradiantButton(text:text,iconWidget:iconWidget,),
+                child: AppGradiantButton(text:text,iconWidget:iconWidget,icon:icon,),
               ),
             ),
           ),

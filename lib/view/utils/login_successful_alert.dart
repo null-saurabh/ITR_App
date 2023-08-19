@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:itr_app/model/theme.colors.dart';
 import 'package:itr_app/view/screen/homepage.dart';
+import 'package:itr_app/view/utils/elevated_button_gradiant.dart';
 
 class ShowLoginSuccessfulDialog extends StatelessWidget {
   const ShowLoginSuccessfulDialog({super.key});
@@ -9,6 +10,7 @@ class ShowLoginSuccessfulDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeMode = Theme.of(context).brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
     return AlertDialog(
+      backgroundColor: Theme.of(context).colorScheme.primary,
       contentPadding: const EdgeInsets.all(20.0),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0), // Adjust the value as needed
@@ -28,20 +30,7 @@ class ShowLoginSuccessfulDialog extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const HomePage()),
                       (Route<dynamic> route) => false
               );},
-            child:Ink(
-              decoration: BoxDecoration(
-                gradient: gradientColor(themeMode),
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Container(
-                alignment: Alignment.center,
-                constraints: const BoxConstraints(
-                  maxWidth: 265,
-                  minHeight: 42.0,
-                ),
-                child: const Text("Let's Go",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),),
-              ),
-            ),
+            child:AppGradiantButton(text: "Let's Go"),
           ),
         ],
       ),

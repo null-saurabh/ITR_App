@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:itr_app/model/theme.colors.dart';
+import 'package:itr_app/view/utils/elevated_button_gradiant.dart';
 
 void showAddPersonBottomSheet(BuildContext context) {
   final themeMode = Theme.of(context).brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
@@ -58,38 +59,36 @@ void showAddPersonBottomSheet(BuildContext context) {
                     ),
                     const SizedBox(height: 10),
 
-                    TextFormField(
-                      decoration: InputDecoration(
-                        hintText: "Enter your Phone Number",
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xff1B7FDB),width: 1),
-                          borderRadius: BorderRadius.circular(10),
+                    Material(
+                      elevation: 5,
+                      shadowColor: Colors.black,
+                      borderRadius: BorderRadius.circular(10),
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          hintText: "Enter your Phone Number",
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xff1B7FDB),width: 1),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xff1B7FDB).withOpacity(0.2),width: 1),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xff1B7FDB).withOpacity(0.2),width: 1),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                        keyboardType: TextInputType.number,
                       ),
-                      keyboardType: TextInputType.number,
                     ),
                     const SizedBox(height: 40),
                     ElevatedButton(onPressed: () {
                       Navigator.pop(context);
                     },
-                      style: ButtonStyle(shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)))),child: Ink(
-                      decoration: BoxDecoration(
-                        gradient: gradientColor(themeMode),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Container(
-                        alignment: Alignment.center,
-                        constraints: const BoxConstraints(
-                          maxWidth: double.infinity,
-                          minHeight: 50.0,
-                        ),
-                        child: Text("Submit",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500),),
-                      ),
-                    ),),
+                      // style: ButtonStyle(shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)))),child: Ink(
+                      // decoration: BoxDecoration(
+                      //   gradient: gradientColor(themeMode),
+                      //   borderRadius: BorderRadius.circular(10.0),
+                      // ),
+                      child: AppGradiantButton(text: "Submit",)
+                    ),
 
                   ],
                 ),

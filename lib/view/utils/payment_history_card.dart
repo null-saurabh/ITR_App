@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:itr_app/model/theme.colors.dart';
 
 class PaymentHistoryCard extends StatelessWidget {
   final bool paymentStatus;
@@ -7,13 +8,13 @@ class PaymentHistoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Determine image and background color based on paymentStatus
+    final themeMode = Theme.of(context).brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
     final String statusImage = paymentStatus
         ? "assets/images/success_rectangle.png"
         : "assets/images/fail_rectangle.png";
     final Color backgroundColor = paymentStatus
-        ? Color(0xff1B7FDB)
-        : Color(0xffCB3A3A);
+        ? paymentPageColor1(themeMode)
+        : paymentPageColor2(themeMode);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 12.0, left: 15, right: 15),
@@ -21,7 +22,7 @@ class PaymentHistoryCard extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           border: Border.all(color: Color(0xff1B7FDB).withOpacity(0.2)),
-          color: backgroundColor.withOpacity(0.02),
+          color: backgroundColor,
         ),
         child: Padding(
           padding: const EdgeInsets.all(12.0),

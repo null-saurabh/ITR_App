@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:itr_app/constants.dart';
+import 'package:itr_app/model/theme.colors.dart';
 import 'package:itr_app/view/utils/drawer.dart';
 import 'package:itr_app/view/utils/login_successful_alert.dart';
 import 'package:itr_app/view/utils/otp_input_box.dart';
@@ -14,16 +14,15 @@ class OtpPage extends StatefulWidget {
 class _OtpPageState extends State<OtpPage> {
   @override
   Widget build(BuildContext context) {
+    final themeMode = Theme.of(context).brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
     return Scaffold(
-      appBar: AppBar(),
-      drawer: const DrawerUi(),
       body: Stack(
         children: [
           Theme.of(context).brightness != Brightness.dark ?
           Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(gradient: blueGradient),
+            decoration: BoxDecoration(gradient: gradientColor(themeMode)),
           )
               : Container(
             width: MediaQuery.of(context).size.width,
@@ -39,7 +38,7 @@ class _OtpPageState extends State<OtpPage> {
                   height: MediaQuery.of(context).size.height *0.15,
                 ),
                 Image.asset(
-                  loginPageImage,
+                  loginPageImage(themeMode),
                   height: MediaQuery.of(context).size.height * 0.3,
                   width: MediaQuery.of(context).size.width * 0.8,
                 ),
@@ -84,6 +83,7 @@ class _OtpPageBoxState extends State<OtpPageBox> {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = Theme.of(context).brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
     return Container(
       width: MediaQuery.of(context).size.width * 0.9,
       height: 350,
@@ -105,7 +105,7 @@ class _OtpPageBoxState extends State<OtpPageBox> {
           children: [
             ShaderMask(
               shaderCallback: (bounds) {
-                return blueGradient.createShader(bounds);
+                return gradientColor(themeMode).createShader(bounds);
               },
               child: const Text(
                 "LOGO",
@@ -161,7 +161,7 @@ class _OtpPageBoxState extends State<OtpPageBox> {
               },
               child: Ink(
                 decoration: BoxDecoration(
-                  gradient: blueGradient,
+                  gradient: gradientColor(themeMode),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 child: Container(

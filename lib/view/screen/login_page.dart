@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:itr_app/constants.dart';
+import 'package:itr_app/model/theme.colors.dart';
 import 'package:itr_app/view/screen/otp_page.dart';
 
 
@@ -8,6 +8,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = Theme.of(context).brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
     return Scaffold(
       body: Stack(
         children: [
@@ -15,7 +16,7 @@ class LoginPage extends StatelessWidget {
           Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(gradient: blueGradient),
+            decoration: BoxDecoration(gradient: gradientColor(themeMode)),
           )
           : Container(
             width: MediaQuery.of(context).size.width,
@@ -31,7 +32,7 @@ class LoginPage extends StatelessWidget {
                   height: MediaQuery.of(context).size.height *0.15,
                 ),
                 Image.asset(
-                  loginPageImage,
+                  loginPageImage(themeMode),
                   height: MediaQuery.of(context).size.height * 0.3,
                   width: MediaQuery.of(context).size.width * 0.8,
                 ),
@@ -82,6 +83,7 @@ class _LoginBoxState extends State<LoginBox> {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = Theme.of(context).brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
     return Container(
       width: MediaQuery.of(context).size.width * 0.9,
       height: 298,
@@ -106,7 +108,7 @@ class _LoginBoxState extends State<LoginBox> {
                 children: [
                   ShaderMask(
                     shaderCallback: (bounds) {
-                      return blueGradient.createShader(bounds);
+                      return gradientColor(themeMode).createShader(bounds);
                     },
                     child: const Text(
                       "LOGO",
@@ -143,18 +145,18 @@ class _LoginBoxState extends State<LoginBox> {
                       hintText: 'Enter your mobile number',
                       hintStyle: const TextStyle(color: Colors.grey),
                       filled: true,
-                      fillColor: loginTextFieldColor.withOpacity(0.5),
+                      fillColor: loginTextFieldColor(themeMode).withOpacity(0.5),
                       // border: OutlineInputBorder(
                       //   borderRadius: BorderRadius.circular(10),
                       //   borderSide: BorderSide(color: Color(0xFFd7e9f9), width: 10.0),
                       // ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(color: loginTextFieldColor, width: 2.0), // Defines default border color
+                        borderSide: BorderSide(color: loginTextFieldColor(themeMode), width: 2.0), // Defines default border color
                       ),
                       focusedBorder:OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(color: loginTextFieldColor, width: 2.0), // Defines default border color
+                        borderSide: BorderSide(color: loginTextFieldColor(themeMode), width: 2.0), // Defines default border color
                       ),
                     ),
                     validator: _validateMobile,
@@ -171,7 +173,7 @@ class _LoginBoxState extends State<LoginBox> {
                     },
                     child: Ink(
                         decoration: BoxDecoration(
-                          gradient: blueGradient,
+                          gradient: gradientColor(themeMode),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       child: Container(

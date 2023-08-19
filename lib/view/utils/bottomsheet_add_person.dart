@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:itr_app/constants.dart';
+import 'package:itr_app/model/theme.colors.dart';
 
 void showAddPersonBottomSheet(BuildContext context) {
+  final themeMode = Theme.of(context).brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
   showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
@@ -29,7 +30,7 @@ void showAddPersonBottomSheet(BuildContext context) {
                     const SizedBox(height: 20),
                     Text(
                       "Name",
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400,color: bottomSheetTextColor),
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400,color: bottomSheetTextColor(themeMode)),
                     ),
                     const SizedBox(height: 10),
                     Material(
@@ -53,7 +54,7 @@ void showAddPersonBottomSheet(BuildContext context) {
                     const SizedBox(height: 20),
                     Text(
                       "Phone Number",
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400,color: bottomSheetTextColor),
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400,color: bottomSheetTextColor(themeMode)),
                     ),
                     const SizedBox(height: 10),
 
@@ -77,7 +78,7 @@ void showAddPersonBottomSheet(BuildContext context) {
                     },
                       style: ButtonStyle(shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)))),child: Ink(
                       decoration: BoxDecoration(
-                        gradient: blueGradient,
+                        gradient: gradientColor(themeMode),
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                       child: Container(

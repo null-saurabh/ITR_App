@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:itr_app/view/screen/homepage.dart';
 import 'package:itr_app/view/screen/login_page.dart';
+import 'package:itr_app/view/screen/payment_history.dart';
+import 'package:itr_app/view/screen/select_person.dart';
 import 'package:itr_app/view_model/provider/theme_changer_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -10,6 +12,7 @@ class DrawerUi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -45,8 +48,9 @@ class DrawerUi extends StatelessWidget {
             ),
           ),
           DrawerListTile(title:"Persons", icon: Icons.groups_outlined,onTap:(){ Navigator.push(
-              context, MaterialPageRoute(builder: (context) => const HomePage())); }),
-          const DrawerListTile(title:"Payment History", icon: Icons.history),
+              context, MaterialPageRoute(builder: (context) => const SelectPerson())); }),
+           DrawerListTile(title:"Payment History", icon: Icons.history,onTap:(){ Navigator.push(
+               context, MaterialPageRoute(builder: (context) => const PaymentHistory())); }),
           const SizedBox(height: 20),
           const DrawerListTile(title:"Dark Mode", icon: Icons.dark_mode_outlined,widgetName: "Switch",),
           const DrawerListTile(title:"Terms & Conditions", icon: Icons.privacy_tip_outlined),
@@ -94,7 +98,7 @@ class DrawerListTile extends StatelessWidget {
         return Switch(
           value: theme.themeMode == ThemeMode.dark,
           onChanged: (newValue) {
-            theme.setTheme(newValue);
+            theme.toggleTheme(newValue);
           },
         );
       }),

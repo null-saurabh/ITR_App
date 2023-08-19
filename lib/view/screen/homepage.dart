@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:itr_app/constants.dart';
+import 'package:itr_app/model/theme.colors.dart';
 import 'package:itr_app/view/screen/select_person.dart';
 import 'package:itr_app/view/utils/drawer.dart';
 import 'package:itr_app/view/utils/floating_action_button.dart';
@@ -10,8 +10,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = Theme.of(context).brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
     return Scaffold(
-      floatingActionButton: const CustomFAB(),
+      floatingActionButton:CustomFAB(),
       drawer: const DrawerUi(),
       body: Stack(
         children: [
@@ -21,7 +22,7 @@ class HomePage extends StatelessWidget {
                 flex: 6,
                 child: Container(
                   decoration: BoxDecoration(
-                    gradient: blueGradient
+                    gradient: gradientColor(themeMode)
                   ),
                   child: Column(
                     children: [
@@ -57,7 +58,7 @@ class HomePage extends StatelessWidget {
                         0.9,
                     height: 265,
                     decoration: BoxDecoration(
-                      color: homePageContainerColor,
+                      color: homePageContainerColor(themeMode),
                       borderRadius: BorderRadius.circular(8),
                       boxShadow: [
                         BoxShadow(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:itr_app/constants.dart';
+import 'package:itr_app/model/theme.colors.dart';
 
 class OrderStatusInfoCard extends StatelessWidget {
   const OrderStatusInfoCard({
@@ -8,8 +8,10 @@ class OrderStatusInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = Theme.of(context).brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
+    
     return Container(
-      decoration: BoxDecoration(gradient: gradientColor,
+      decoration: BoxDecoration(gradient:gradientColor(themeMode),
           borderRadius: BorderRadius.circular(15)),
       child:Padding(
         padding: const EdgeInsets.only(left: 15.0,right: 15,top: 20,bottom: 20),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:itr_app/constants.dart';
+import 'package:itr_app/model/theme.colors.dart';
 import 'package:itr_app/view/screen/homepage.dart';
 import 'package:itr_app/view/utils/bottom_navigation_button.dart';
 import 'package:itr_app/view/utils/drawer.dart';
@@ -61,12 +61,13 @@ class PaymentSuccessUi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = Theme.of(context).brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start  ,
       children: [
         Row(
           children: [
-            Image.asset(success,height: 24, width: 24,),
+            Image.asset(successImage(themeMode),height: 24, width: 24,),
             const SizedBox(width: 10,),
             const Text("Payment Successful",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),)
           ],
@@ -74,7 +75,7 @@ class PaymentSuccessUi extends StatelessWidget {
         const HorizontalLine(length: 30),
         Row(
           children: [
-            Image.asset(success,height: 24, width: 24,),
+            Image.asset(successImage(themeMode),height: 24, width: 24,),
             const SizedBox(width: 10,),
             const Text("Assign Expert",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),)
           ],
@@ -127,6 +128,7 @@ class PaymentFailUi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = Theme.of(context).brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start  ,
       children: [
@@ -142,7 +144,7 @@ class PaymentFailUi extends StatelessWidget {
           children: [
             WaitIconForOrderStatus(),
             SizedBox(width: 10,),
-            Text("Assign Expert",style: TextStyle(fontWeight: FontWeight.w400,fontSize: 16,color: orderStatusFailedTextColor),)
+            Text("Assign Expert",style: TextStyle(fontWeight: FontWeight.w400,fontSize: 16,color: orderStatusFailedTextColor(themeMode)),)
           ],
         ),
         const HorizontalLine(length: 30,),
@@ -150,7 +152,7 @@ class PaymentFailUi extends StatelessWidget {
           children: [
             WaitIconForOrderStatus(),
             SizedBox(width: 10,),
-            Text("Return Filed",style: TextStyle(fontWeight: FontWeight.w400,fontSize: 16,color: orderStatusFailedTextColor),)
+            Text("Return Filed",style: TextStyle(fontWeight: FontWeight.w400,fontSize: 16,color: orderStatusFailedTextColor(themeMode)),)
           ],
         ),
 

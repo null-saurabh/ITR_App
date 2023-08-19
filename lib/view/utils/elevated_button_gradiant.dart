@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:itr_app/constants.dart';
+import 'package:itr_app/model/theme.colors.dart';
 
 class AppGradiantButton extends StatelessWidget {
   final Widget? iconWidget; // Changed type to Widget
@@ -13,9 +13,10 @@ class AppGradiantButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = Theme.of(context).brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
     return Ink(
       decoration: BoxDecoration(
-        gradient: blueGradient,
+        gradient: gradientColor(themeMode),
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Container(

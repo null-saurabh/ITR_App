@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:itr_app/constants.dart';
+import 'package:itr_app/model/theme.colors.dart';
 import 'package:itr_app/view/screen/homepage.dart';
 
 class ShowLoginSuccessfulDialog extends StatelessWidget {
@@ -7,6 +7,7 @@ class ShowLoginSuccessfulDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = Theme.of(context).brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
     return AlertDialog(
       contentPadding: const EdgeInsets.all(20.0),
       shape: RoundedRectangleBorder(
@@ -23,14 +24,13 @@ class ShowLoginSuccessfulDialog extends StatelessWidget {
           ElevatedButton(
             // style: ButtonStyle(minimumSize:MaterialStateProperty.all(Size(265,10))),
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const HomePage()));
-            },
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const HomePage()),
+                      (Route<dynamic> route) => false
+              );},
             child:Ink(
               decoration: BoxDecoration(
-                gradient: blueGradient,
+                gradient: gradientColor(themeMode),
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: Container(

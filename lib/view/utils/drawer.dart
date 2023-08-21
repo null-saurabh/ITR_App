@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:itr_app/view/screen/homepage.dart';
 import 'package:itr_app/view/screen/login_page.dart';
 import 'package:itr_app/view/screen/payment_history.dart';
 import 'package:itr_app/view/screen/select_person.dart';
+import 'package:itr_app/view_model/provider/api_provider.dart';
 import 'package:itr_app/view_model/provider/theme_changer_provider.dart';
 import 'package:provider/provider.dart';
 
 class DrawerUi extends StatelessWidget {
   const DrawerUi({super.key});
 
+  void _handleLogout(BuildContext context) {
+    final apiProvider = Provider.of<ApiProvider>(context, listen: false);
+    apiProvider.logout();
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (context) => const LoginPage()),
+          (Route<dynamic> route) => false,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,10 +65,7 @@ class DrawerUi extends StatelessWidget {
           const DrawerListTile(title:"FAQs", icon: Icons.question_answer_outlined),
           const DrawerListTile(title:"Rate Us", icon: Icons.star_border_outlined),
           const SizedBox(height: 20),
-          DrawerListTile(title:"Logout", icon: Icons.logout,color: Colors.red,onTap:(){Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => const LoginPage()),
-                  (Route<dynamic> route) => false
-          );}),
+          DrawerListTile(title:"Logout", icon: Icons.logout,color: Colors.red,onTap:()=> _handleLogout(context)),
 
         ],
       ),

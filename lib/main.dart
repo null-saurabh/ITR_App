@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:itr_app/model/theme_data.dart';
 import 'package:itr_app/view/screen/splash_screen.dart';
+import 'package:itr_app/view_model/provider/api_provider.dart';
 import 'package:itr_app/view_model/provider/theme_changer_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +21,8 @@ void main() {
   runApp(
       MultiProvider(
           providers:[
-            ChangeNotifierProvider(create: (_) => ThemeChanger())
+            ChangeNotifierProvider(create: (_) => ThemeChanger()),
+            ChangeNotifierProvider(create: (_) => ApiProvider()),
           ],
           child: const MyApp()));
 
@@ -44,6 +46,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-// logout
-// navigatino push

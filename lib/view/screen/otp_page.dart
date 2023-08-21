@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:itr_app/model/theme.colors.dart';
-import 'package:itr_app/view/utils/drawer.dart';
 import 'package:itr_app/view/utils/login_successful_alert.dart';
 import 'package:itr_app/view/utils/otp_input_box.dart';
+import 'package:itr_app/view_model/provider/api_provider.dart';
+import 'package:provider/provider.dart';
 
 class OtpPage extends StatefulWidget {
-  const OtpPage({super.key});
+  final String phoneNumber;
+  const OtpPage({required this.phoneNumber,super.key});
 
   @override
   State<OtpPage> createState() => _OtpPageState();
@@ -45,12 +47,12 @@ class _OtpPageState extends State<OtpPage> {
               ],
             ),
           ),
-          const Align(
+         Align(
             alignment: Alignment.bottomCenter,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                OtpPageBox(),
+                OtpPageBox(phoneNumber: widget.phoneNumber,),
                 SizedBox(
                   height: 50,
                 ),
@@ -64,8 +66,13 @@ class _OtpPageState extends State<OtpPage> {
 }
 
 
+
+
 class OtpPageBox extends StatefulWidget {
+  final String phoneNumber;
+
   const OtpPageBox({
+    required this.phoneNumber,
     super.key,
   });
 
@@ -79,11 +86,30 @@ class _OtpPageBoxState extends State<OtpPageBox> {
   final TextEditingController _fieldTwo = TextEditingController();
   final TextEditingController _fieldThree = TextEditingController();
   final TextEditingController _fieldFour = TextEditingController();
-  String? _otp;
+
+  Future<void> _verifyOtp() async {
+    String otp = _fieldOne.text + _fieldTwo.text + _fieldThree.text + _fieldFour.text;
+
+    final userProvider = Provider.of<ApiProvider>(context, listen: false);
+
+    bool success = await userProvider.verifyOTP(widget.phoneNumber , otp);
+
+    if(mounted){
+      if (success) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => const ShowLoginSuccessfulDialog(),
+        );
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(userProvider.errorMessage!)));
+      }
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    final themeMode = Theme.of(context).brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
     return Container(
       width: MediaQuery.of(context).size.width * 0.9,
       height: 350,
@@ -147,18 +173,7 @@ class _OtpPageBoxState extends State<OtpPageBox> {
             const SizedBox(height: 25,),
 
             ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  _otp = _fieldOne.text +
-                      _fieldTwo.text +
-                      _fieldThree.text +
-                      _fieldFour.text;
-                });
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) => const ShowLoginSuccessfulDialog(),
-                );
-              },
+              onPressed: _verifyOtp,
               child: Ink(
                 decoration: BoxDecoration(
                   gradient: blueGradient,

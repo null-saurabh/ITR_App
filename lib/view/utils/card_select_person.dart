@@ -5,7 +5,13 @@ import 'package:itr_app/view/screen/upload_document_page.dart';
 import 'package:itr_app/view/utils/select_person_extension.dart';
 
 class SelectPersonCard extends StatefulWidget {
+  final String name;
+  final String phoneNumber;
+  final String id;
   const  SelectPersonCard({
+    required this.name,
+    required this.id,
+    required this.phoneNumber,
     super.key,
   });
 
@@ -57,7 +63,7 @@ class _SelectPersonCardState extends State<SelectPersonCard> with AutomaticKeepA
                       const SizedBox(
                         width: 10,
                       ),
-                      Text("John Smith",
+                      Text(widget.name,
                           style: TextStyle(
                               color: selectPersonPageTitleColor(themeMode),
                               fontSize: 17,
@@ -98,7 +104,7 @@ class _SelectPersonCardState extends State<SelectPersonCard> with AutomaticKeepA
                           color: selectPersonPageSubtitleColor(themeMode),
                           fontSize: 14,
                           fontWeight: FontWeight.w400)),
-                  Text("SDFI343K34",
+                  Text(widget.id,
                       style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
@@ -118,7 +124,7 @@ class _SelectPersonCardState extends State<SelectPersonCard> with AutomaticKeepA
                               color: selectPersonPageSubtitleColor(themeMode),
                               fontSize: 14,
                               fontWeight: FontWeight.w400)),
-                      Text("9876543210",
+                      Text(widget.phoneNumber,
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,

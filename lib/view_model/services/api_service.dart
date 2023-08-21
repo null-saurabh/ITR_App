@@ -6,36 +6,27 @@ class AuthService {
   static const baseUrl = 'YOUR_BASE_API_URL';
 
   Future<LoginResponse> login(String phoneNumber) async {
-    var headers = {
-      'Content-Type': 'application/json'
-    };
-    var request = http.Request('POST', Uri.parse('http://ec2-3-7-45-69.ap-south-1.compute.amazonaws.com:4000/api/auth/login'));
-    request.body = json.encode({
-      "phone_number": "9079857902"
-    });
-    request.headers.addAll(headers);
-
-    http.StreamedResponse response = await request.send();
+    final response = await http.post(
+      Uri.parse('http://ec2-3-7-45-69.ap-south-1.compute.amazonaws.com:4000/api/auth/login'),
+      body: json.encode({
+        "phone_number": phoneNumber,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    );
 
     if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
-      return LoginResponse.fromJson(json.decode(response.stream.bytesToString()));
+      return LoginResponse.fromJson(json.decode(response.body));
+    } else {
+      throw Exception("Failed to login");
     }
-    else {
-      print(response.reasonPhrase);
-    }
-
-
-    // if (response.statusCode == 200) {
-    //   return LoginResponse.fromJson(json.decode(response.body));
-    // } else {
-    //   throw Exception("Failed to login");
-    }
+  }
 
 
   Future<OTPResponse> verifyOTP(String phoneNumber, String otp) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/verify-otp'),
+      Uri.parse('http://ec2-3-7-45-69.ap-south-1.compute.amazonaws.com:4000/api/auth/varify-otp'),
       body: json.encode({
         "phone_number": phoneNumber,
         "otp": otp,
@@ -52,9 +43,35 @@ class AuthService {
     }
   }
 
+  Future<bool> addPerson(String name, String phoneNumber,String token) async {
+    final response = await http.post(
+      Uri.parse('http://ec2-3-7-45-69.ap-south-1.compute.amazonaws.com:4000/api/user/person/addPerson'),
+      body: json.encode({
+        "name": name,
+        "phone_number": phoneNumber,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      final responseData = json.decode(response.body);
+      if (responseData['errors'] != null && responseData['errors']['message'] == "Already added person with this phone number") {
+        throw Exception(responseData['errors']['message']);
+      } else {
+        throw Exception("Failed to add person");
+      }
+    }
+  }
+
+
   Future<PersonsResponse> getPersons(String token) async {
     final response = await http.get(
-      Uri.parse('$baseUrl/persons'),
+      Uri.parse('http://ec2-3-7-45-69.ap-south-1.compute.amazonaws.com:4000/api/user/person/'),
       headers: {
         "Content-Type": "application/json",
         "Authorization": token,

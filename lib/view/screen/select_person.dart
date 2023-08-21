@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:itr_app/model/api_model.dart';
 import 'package:itr_app/view/utils/bottom_navigation_button.dart';
 import 'package:itr_app/view/utils/bottomsheet_add_person.dart';
 import 'package:itr_app/view/utils/card_select_person.dart';
-import 'package:itr_app/view/utils/drawer.dart';
-
-import 'package:itr_app/view_model/provider/theme_changer_provider.dart';
+import 'package:itr_app/view_model/provider/api_provider.dart';
 import 'package:provider/provider.dart';
 
-class SelectPerson extends StatefulWidget {
+class SelectPerson extends StatelessWidget {
   const SelectPerson({super.key});
 
-  @override
-  State<SelectPerson> createState() => _SelectPersonState();
-}
-
-class _SelectPersonState extends State<SelectPerson> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,20 +17,41 @@ class _SelectPersonState extends State<SelectPerson> {
         backgroundColor: Theme.of(context).colorScheme.tertiary,
         title: const Text("Select Person"),
       ),
-      bottomNavigationBar: BottomNavigationButton(text: "Add New Person",icon: Icons.add_circle_outline,elevation: true,onTap: () => showAddPersonBottomSheet(context)),
-      body: Consumer<ThemeChanger>(builder: (context, theme, _) {
-        return Padding(
-          padding: const EdgeInsets.only(top: 20.0, left: 15, right: 15),
-          child: ListView.builder(
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return SelectPersonCard();
-              }),
-        );
-      }),
+      bottomNavigationBar: BottomNavigationButton(
+        text: "Add New Person",
+        icon: Icons.add_circle_outline,
+        elevation: true,
+        onTap: () => showAddPersonBottomSheet(context),
+      ),
+      body: Consumer<ApiProvider>(
+        builder: (ctx, apiProvider, _) {
+          return FutureBuilder<List<Person>>(
+            future: apiProvider.getPersons(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else {
+                final persons = snapshot.data!;
+                return Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: ListView.builder(
+                    itemCount: persons.length,
+                    itemBuilder: (context, index) {
+                      return SelectPersonCard(
+                        name: persons[index].name,
+                        id: persons[index].id,
+                        phoneNumber: persons[index].phoneNumber,
+                      );
+                    },
+                  ),
+                );
+              }
+            },
+          );
+        },
+      ),
     );
   }
 }
-
-
-

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:itr_app/model/theme.colors.dart';
 import 'package:itr_app/view/screen/otp_page.dart';
+import 'package:itr_app/view_model/provider/api_provider.dart';
+import 'package:provider/provider.dart';
 
 
 class LoginPage extends StatelessWidget {
@@ -163,12 +165,20 @@ class _LoginBoxState extends State<LoginBox> {
                   ),
                   const SizedBox(height: 20,),
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async{
                       if (_formKey.currentState!.validate()) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const OtpPage()));
+                        var userProvider = Provider.of<ApiProvider>(context, listen: false);
+                        bool success = await userProvider.login(controller.text);
+
+                        if (mounted) {
+                          if (success) {
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => OtpPage(phoneNumber: controller.text,)));
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(userProvider.errorMessage!))
+                            );
+                          }
+                        }
                       }
                     },
                     child: Ink(

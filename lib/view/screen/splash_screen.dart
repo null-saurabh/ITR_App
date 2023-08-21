@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:itr_app/view/screen/homepage.dart';
 import 'package:itr_app/view/screen/login_page.dart';
+import 'package:itr_app/view_model/provider/api_provider.dart';
+import 'package:provider/provider.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -8,16 +11,18 @@ class Splash extends StatefulWidget {
 }
 
 class VideoState extends State<Splash> with SingleTickerProviderStateMixin {
-  bool? isLoggedIn = false;
+  late bool isLoggedIn;
   late AnimationController animationController;
   late Animation<double> animation;
+  late Future<void> initFuture;
 
   void navigationPage() {
-    if (isLoggedIn!) {
+    isLoggedIn = Provider.of<ApiProvider>(context, listen: false).isLoggedIn;
+    if (isLoggedIn) {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const LoginPage(),
+            builder: (context) => const HomePage(),
           ));
     } else {
       Navigator.pushReplacement(
@@ -33,12 +38,17 @@ class VideoState extends State<Splash> with SingleTickerProviderStateMixin {
     animation =
         CurvedAnimation(parent: animationController, curve: Curves.easeOut);
 
-    animationController.forward();
-    animationController.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        navigationPage();
-      }
-    });
+    initFuture = Future.wait([
+      animationController.forward(),
+      Provider.of<ApiProvider>(context, listen: false).loadTokenFromStorage()
+    ]).then((value) => navigationPage());
+
+    // // animationController.forward();
+    // animationController.addStatusListener((status) {
+    //   if (status == AnimationStatus.completed) {
+    //     navigationPage();
+    //   }
+    // });
   }
 
   @override

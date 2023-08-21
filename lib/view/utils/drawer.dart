@@ -57,7 +57,10 @@ class DrawerUi extends StatelessWidget {
           const DrawerListTile(title:"FAQs", icon: Icons.question_answer_outlined),
           const DrawerListTile(title:"Rate Us", icon: Icons.star_border_outlined),
           const SizedBox(height: 20),
-          const DrawerListTile(title:"Logout", icon: Icons.logout,color: Colors.red,),
+          DrawerListTile(title:"Logout", icon: Icons.logout,color: Colors.red,onTap:(){Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => const LoginPage()),
+                  (Route<dynamic> route) => false
+          );}),
 
         ],
       ),

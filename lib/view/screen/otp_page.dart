@@ -98,6 +98,7 @@ class _OtpPageBoxState extends State<OtpPageBox> {
       if (success) {
         showDialog(
           context: context,
+          barrierDismissible: false,
           builder: (BuildContext context) => const ShowLoginSuccessfulDialog(),
         );
       } else {

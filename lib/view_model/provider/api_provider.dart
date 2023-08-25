@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:itr_app/model/api_model.dart';
@@ -41,13 +43,22 @@ class ApiProvider with ChangeNotifier {
         return false;
       }
     } catch (error) {
-      _errorMessage = 'Failed to login';
+      _errorMessage = 'Internet Error';
       notifyListeners();
       return false;
     }
   }
 
-
+  Future<void> deletePerson(String personId) async {
+    try {
+      await _authService.deletePerson(personId, _token!);
+      notifyListeners();
+    } catch (error) {
+      _errorMessage = 'Failed to delete person';
+      notifyListeners();
+      rethrow;
+    }
+  }
 
   Future<bool> verifyOTP(String phoneNumber, String otp) async {
     try {
@@ -99,6 +110,23 @@ class ApiProvider with ChangeNotifier {
       return await _authService.addPerson(name, phoneNumber,_token!);
     } catch (error) {
       _errorMessage = 'Failed to add person';
+      notifyListeners();
+      rethrow;
+    }
+  }
+
+  Future<bool> uploadDocuments(File documents, String personId) async {
+    if (_token == null) {
+      _errorMessage = 'Not authenticated';
+      notifyListeners();
+      throw Exception('Not authenticated');
+    }
+
+    try {
+      await _authService.uploadDocuments(documents, personId, _token!);
+      return true;
+    } catch (error) {
+      _errorMessage = 'Failed to upload documents';
       notifyListeners();
       rethrow;
     }

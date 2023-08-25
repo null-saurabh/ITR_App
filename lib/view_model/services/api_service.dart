@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:itr_app/model/api_model.dart';
@@ -82,6 +84,53 @@ class AuthService {
       return PersonsResponse.fromJson(json.decode(response.body));
     } else {
       throw Exception("Failed to fetch persons");
+    }
+  }
+
+  Future<bool> deletePerson(String id, String token) async {
+    final response = await http.delete(
+      Uri.parse('http://ec2-3-7-45-69.ap-south-1.compute.amazonaws.com:4000/api/user/person/$id'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token,
+      },
+    );
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      final responseData = json.decode(response.body);
+      if (responseData['errors'] != null) {
+        throw Exception(responseData['errors']['message'] ?? "Failed to delete person");
+      } else {
+        throw Exception("Failed to delete person");
+      }
+    }
+  }
+
+  Future<bool> uploadDocuments(File documents, String personId, String token) async {
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse('http://ec2-3-7-45-69.ap-south-1.compute.amazonaws.com:4000/api/user/person/upload-doc'),
+    );
+
+    request.headers.addAll({
+      "Authorization": token,
+    });
+
+    request.fields.addAll({
+      'person_id': personId
+    });
+
+
+      request.files.add(await http.MultipartFile.fromPath('common_file', documents.path));
+
+    var response = await request.send();
+
+    if (response.statusCode == 201) {
+      return true;
+    } else {
+      // print(response.statusCode);
+      throw Exception("Failed to upload documents");
     }
   }
 }

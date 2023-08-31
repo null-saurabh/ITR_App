@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:itr_app/model/theme.colors.dart';
+import 'package:itr_app/view/screen/order_status.dart';
 import 'package:itr_app/view/utils/bottom_navigation_button.dart';
 import 'package:itr_app/view/utils/elevated_button_gradiant.dart';
 import 'package:itr_app/view/utils/lauch_whatsapp_or_call.dart';
@@ -53,7 +54,14 @@ class _UploadDocumentState extends State<UploadDocument> {
       Navigator.pop(context);
 
 
-      Provider.of<RazorPayProvider>(context, listen: false).openCheckout(
+      Provider.of<RazorPayProvider>(context, listen: false)
+        ..onSuccess = () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => OrderStatus(paymentStatus: true)));
+        }
+        ..onError = () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => OrderStatus(paymentStatus: false)));
+        }
+        ..openCheckout(
         amount: orderAmount,
         key: razorpayKey,
         name: customerName,

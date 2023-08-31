@@ -1,20 +1,28 @@
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:flutter/material.dart';
 
 class RazorpayService {
   final _razorpay = Razorpay();
 
+  VoidCallback? _onSuccess;
+  VoidCallback? _onError;
+
+  set onSuccess(VoidCallback? callback) => _onSuccess = callback;
+  set onError(VoidCallback? callback) => _onError = callback;
+
   void initialize() {
+
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    // Handle payment success event
+    if (_onSuccess != null) _onSuccess!();
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
-    // Handle payment error event
+    if (_onError != null) _onError!();
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
@@ -36,7 +44,6 @@ class RazorpayService {
       'prefill': {'contact': number,'name':name},
     };
     try{
-      print("abcd"+orderId);
     _razorpay.open(options);
     }
         catch(error){

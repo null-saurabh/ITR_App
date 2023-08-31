@@ -8,6 +8,10 @@ class RazorPayProvider extends ChangeNotifier {
     _razorpayService.initialize();
   }
 
+  set onSuccess(VoidCallback? callback) => _razorpayService.onSuccess = callback;
+  set onError(VoidCallback? callback) => _razorpayService.onError = callback;
+
+
   void openCheckout({required int amount,required String key, required String name, required String number, required String orderId}) {
     _razorpayService.openCheckout(amount: amount,key: key,name: name,number: number, orderId: orderId);
   }

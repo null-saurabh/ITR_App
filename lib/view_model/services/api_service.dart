@@ -174,7 +174,4 @@ class AuthService {
       throw Exception('Failed to fetch payment history');
     }
   }
-
-
-
 }

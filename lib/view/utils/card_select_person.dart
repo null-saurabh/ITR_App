@@ -80,7 +80,7 @@ class _SelectPersonCardState extends State<SelectPersonCard> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      UploadDocument(personId: widget.id)));
+                                      UploadDocument(personId: widget.id,name: widget.name, number: widget.phoneNumber)));
                         },
                         child: Container(
                           width: 108,
@@ -100,32 +100,32 @@ class _SelectPersonCardState extends State<SelectPersonCard> {
                           )),
                         ),
                       ),
-                      // PopupMenuButton<String>(
-                      //   icon: const Icon(Icons.more_vert),
-                      //   onSelected: (String result) async{
-                      //     if (result == 'option1') {
-                      //       // Perform action for option 1
-                      //     } else if (result == 'Delete') {
-                      //       print("a");
-                      //       try {
-                      //         await Provider.of<ApiProvider>(context, listen: false).deletePerson(widget.id);
-                      //       } catch (error) {
-                      //         ScaffoldMessenger.of(context).showSnackBar(
-                      //             const SnackBar(content: Text('Failed to delete Person'))
-                      //         );}
-                      //     }
-                      //   },
-                      //   itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                      //     const PopupMenuItem<String>(
-                      //       value: 'Edit',
-                      //       child: Text('Edit'),
-                      //     ),
-                      //     const PopupMenuItem<String>(
-                      //       value: 'Delete',
-                      //       child: Text('Delete'),
-                      //     ),
-                      //   ],
-                      // )
+                      PopupMenuButton<String>(
+                        icon: const Icon(Icons.more_vert),
+                        onSelected: (String result) async{
+                          if (result == 'option1') {
+                            // Perform action for option 1
+                          } else if (result == 'Delete') {
+                            print("a");
+                            try {
+                              await Provider.of<ApiProvider>(context, listen: false).deletePerson(widget.id);
+                            } catch (error) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Failed to delete Person'))
+                              );}
+                          }
+                        },
+                        itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                          const PopupMenuItem<String>(
+                            value: 'Edit',
+                            child: Text('Edit'),
+                          ),
+                          const PopupMenuItem<String>(
+                            value: 'Delete',
+                            child: Text('Delete'),
+                          ),
+                        ],
+                      )
                     ],
                   )
                 ],

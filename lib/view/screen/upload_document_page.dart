@@ -2,16 +2,18 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:itr_app/model/theme.colors.dart';
-import 'package:itr_app/view/screen/order_status.dart';
 import 'package:itr_app/view/utils/bottom_navigation_button.dart';
 import 'package:itr_app/view/utils/elevated_button_gradiant.dart';
 import 'package:itr_app/view/utils/lauch_whatsapp_or_call.dart';
 import 'package:itr_app/view_model/provider/api_provider.dart';
+import 'package:itr_app/view_model/provider/razorpay_provider.dart';
 import 'package:provider/provider.dart';
 
 class UploadDocument extends StatefulWidget {
   final String personId;
-  const UploadDocument({required this.personId, super.key});
+  final String name;
+  final String number;
+  const UploadDocument({required this.personId,required this.name, required this.number, super.key});
 
   @override
   State<UploadDocument> createState() => _UploadDocumentState();
@@ -37,6 +39,36 @@ class _UploadDocumentState extends State<UploadDocument> {
     }
   }
 
+
+  Future<void> placeOrder(String personId) async {
+    try {
+      final orderResponse = await Provider.of<ApiProvider>(context, listen: false)
+          .createOrder(personId);
+
+      final orderId = orderResponse.id;
+      final orderAmount = orderResponse.amount;
+      final razorpayKey = orderResponse.razorpayKeyId; // Replace with your Razorpay key
+      final customerName = widget.name; // Replace with customer's name
+      final customerNumber = widget.number; // Replace with customer's number
+      Navigator.pop(context);
+
+
+      Provider.of<RazorPayProvider>(context, listen: false).openCheckout(
+        amount: orderAmount,
+        key: razorpayKey,
+        name: customerName,
+        number: customerNumber,
+        orderId: orderId,
+      );
+
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Failed to place order: ${error.toString()}")),
+      );
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final themeMode = Theme.of(context).brightness == Brightness.dark
@@ -49,7 +81,7 @@ class _UploadDocumentState extends State<UploadDocument> {
         title: const Text("Upload Documents"),
       ),
       bottomNavigationBar: BottomNavigationButton(
-          text: "Submit",
+          text: "Complete Pay",
           elevation: false,
           onTap: () async {
             showDialog(
@@ -61,22 +93,17 @@ class _UploadDocumentState extends State<UploadDocument> {
                 );
               },
             );
+            // placeOrder(widget.personId);
+
             try {
-              final apiProvider =
-                  Provider.of<ApiProvider>(context, listen: false);
-              await Future.wait(_documents.map((document) async {
-                await apiProvider.uploadDocuments(document, widget.personId);
-              }));
-              Navigator.pop(context);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          const OrderStatus(paymentStatus: false)));
+              final apiProvider = Provider.of<ApiProvider>(context, listen: false);
+              await apiProvider.uploadDocuments(_documents, widget.personId);
+              placeOrder(widget.personId);
             } catch (error) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(error.toString())),
               );
+              Navigator.pop(context);
             }
           }),
       body: Padding(

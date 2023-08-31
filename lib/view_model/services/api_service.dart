@@ -87,6 +87,26 @@ class AuthService {
     }
   }
 
+  Future<OrderResponse> createOrder(String personId, String token) async {
+    final response = await http.post(
+      Uri.parse('http://ec2-3-7-45-69.ap-south-1.compute.amazonaws.com:4000/api/user/order/create-order'),
+      body: json.encode({
+        "person_id": personId,
+        "amount": 599,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return OrderResponse.fromJson(json.decode(response.body));
+    } else {
+      throw Exception("Failed to create order");
+    }
+  }
+
   Future<bool> deletePerson(String id, String token) async {
     final response = await http.delete(
       Uri.parse('http://ec2-3-7-45-69.ap-south-1.compute.amazonaws.com:4000/api/user/person/$id'),
@@ -107,7 +127,7 @@ class AuthService {
     }
   }
 
-  Future<bool> uploadDocuments(File documents, String personId, String token) async {
+  Future<bool> uploadDocuments(List<File> documents, String personId, String token) async {
     var request = http.MultipartRequest(
       'POST',
       Uri.parse('http://ec2-3-7-45-69.ap-south-1.compute.amazonaws.com:4000/api/user/person/upload-doc'),
@@ -122,15 +142,39 @@ class AuthService {
     });
 
 
-      request.files.add(await http.MultipartFile.fromPath('common_file', documents.path));
+    for (int i = 0; i < documents.length; i++) {
+      request.files.add(await http.MultipartFile.fromPath('files', documents[i].path));
+    }
+
 
     var response = await request.send();
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       return true;
     } else {
       // print(response.statusCode);
       throw Exception("Failed to upload documents");
     }
   }
+
+
+  Future<PaymentHistory> fetchPaymentHistory(String token) async {
+
+    final response = await http.get(
+        Uri.parse("http://ec2-3-7-45-69.ap-south-1.compute.amazonaws.com:4000/api/user/payment/payment-history"),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return PaymentHistory.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to fetch payment history');
+    }
+  }
+
+
+
 }

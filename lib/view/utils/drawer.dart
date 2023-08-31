@@ -47,7 +47,7 @@ class DrawerUi extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text('John Doe', style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500)),
+                      Text('Welcome!', style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500)),
                       Text('+91 9876543210', style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500)),
                     ],
                   ),
@@ -58,7 +58,7 @@ class DrawerUi extends StatelessWidget {
           DrawerListTile(title:"Persons", icon: Icons.groups_outlined,onTap:(){ Navigator.push(
               context, MaterialPageRoute(builder: (context) => const SelectPerson())); }),
            DrawerListTile(title:"Payment History", icon: Icons.history,onTap:(){ Navigator.push(
-               context, MaterialPageRoute(builder: (context) => const PaymentHistory())); }),
+               context, MaterialPageRoute(builder: (context) => const PaymentHistoryScreen())); }),
           const SizedBox(height: 20),
           const DrawerListTile(title:"Dark Mode", icon: Icons.dark_mode_outlined,widgetName: "Switch",),
           const DrawerListTile(title:"Terms & Conditions", icon: Icons.privacy_tip_outlined),

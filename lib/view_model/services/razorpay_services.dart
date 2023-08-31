@@ -21,14 +21,14 @@ class RazorpayService {
     // Handle external wallet event
   }
 
-  void openCheckout({required double amount,required String key,required String name,required String number,required String orderId}) {
+  void openCheckout({required int amount,required String key,required String name,required String number,required String orderId}) {
 
     final options = {
       'key': key,
-      'amount': amount * 100,
+      'amount': amount,
       'currency' : "INR",
       'name': "ITR APP",
-      'time': 180,
+      'timeout': 20,
       'order_id': orderId,
       'description':'ITR Fee',
       'retry': {'enabled': true, 'max_count': 1},
@@ -36,7 +36,9 @@ class RazorpayService {
       'prefill': {'contact': number,'name':name},
     };
     try{
-    _razorpay.open(options);}
+      print("abcd"+orderId);
+    _razorpay.open(options);
+    }
         catch(error){
           throw Exception("RazorPay error$error");
         }

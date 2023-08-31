@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:itr_app/view/utils/drawer.dart';
 import 'package:itr_app/view/utils/payment_history_card.dart';
+import 'package:itr_app/view_model/provider/api_provider.dart';
+import 'package:provider/provider.dart';
 
-class PaymentHistory extends StatelessWidget {
-  static const List<bool> paymentStatusList = [true, false, true,false,false,true];
+class PaymentHistoryScreen extends StatelessWidget {
+  // static const List<bool> paymentStatusList = [
+  //   true,
+  //   false,
+  //   true,
+  //   false,
+  //   false,
+  //   true
+  // ];
 
-  const PaymentHistory({Key? key}) : super(key: key);
-
+  const PaymentHistoryScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +25,33 @@ class PaymentHistory extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 25.0),
-        child: ListView.builder(itemCount: paymentStatusList.length,itemBuilder: (context,index){
-          return PaymentHistoryCard(paymentStatus: paymentStatusList[index],);
-        }),
+        child: Consumer<ApiProvider>(
+          builder: (ctx, apiProvider, _) {
+            return FutureBuilder(
+                future: apiProvider.getPaymentHistory(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Center(child: Text('No Payment Data Available.'));
+                  } else {
+                    final paymentHistory = snapshot.data!;
+                    return ListView.builder(
+                        itemCount: paymentHistory.length,
+                        itemBuilder: (context, index) {
+                          return PaymentHistoryCard(
+                            paymentStatus: paymentHistory[index].status == "Completed" ? true : false,
+                            transactionId: paymentHistory[index].paymentId,
+                            dateAndTime: DateTime.parse(paymentHistory[index].dateTime),
+                            // paymentStatus: paymentStatusList[index],
+                          );
+                        });
+                  }
+                });
+          },
+        ),
       ),
     );
   }

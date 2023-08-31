@@ -49,6 +49,23 @@ class ApiProvider with ChangeNotifier {
     }
   }
 
+  Future<OrderResponse> createOrder(String personId) async {
+    if (_token == null) {
+      _errorMessage = 'Not authenticated';
+      notifyListeners();
+      throw Exception('Not authenticated');
+    }
+
+    try {
+      return await _authService.createOrder(personId, _token!);
+    } catch (error) {
+      _errorMessage = 'Failed to create order';
+      notifyListeners();
+      rethrow;
+    }
+  }
+
+
   Future<void> deletePerson(String personId) async {
     try {
       await _authService.deletePerson(personId, _token!);
@@ -104,6 +121,29 @@ class ApiProvider with ChangeNotifier {
     }
   }
 
+  Future<List<PaymentData>> getPaymentHistory() async {
+    if (_token == null) {
+      _errorMessage = 'Not authenticated';
+      notifyListeners();
+      throw Exception('Not authenticated');
+    }
+
+    try {
+      final response = await _authService.fetchPaymentHistory(_token!);
+      if (response.success) {
+        return response.data;
+      } else {
+        _errorMessage = 'Failed to fetch data';
+        notifyListeners();
+        throw Exception('Failed to fetch data');
+      }
+    } catch (error) {
+      _errorMessage = 'Failed to fetch data';
+      notifyListeners();
+      rethrow;
+    }
+  }
+
 
   Future<bool> addPerson(String name, String phoneNumber) async {
     try {
@@ -115,7 +155,7 @@ class ApiProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> uploadDocuments(File documents, String personId) async {
+  Future<bool> uploadDocuments(List<File> documents, String personId) async {
     if (_token == null) {
       _errorMessage = 'Not authenticated';
       notifyListeners();

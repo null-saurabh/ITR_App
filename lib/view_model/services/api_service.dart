@@ -37,7 +37,6 @@ class AuthService {
         "Content-Type": "application/json",
       },
     );
-
     if (response.statusCode == 200) {
       return OTPResponse.fromJson(json.decode(response.body));
     } else {
@@ -67,6 +66,24 @@ class AuthService {
       } else {
         throw Exception("Failed to add person");
       }
+    }
+  }
+
+  Future<bool> updateName(String name, String token) async {
+    final response = await http.put(
+      Uri.parse('http://ec2-3-7-45-69.ap-south-1.compute.amazonaws.com:4000/api/auth/update-name'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      },
+      body: jsonEncode({"name": name}),
+    );
+
+    if (response.statusCode == 200) {
+        return true;
+    }
+    else {
+      throw Exception("Failed to update Name");
     }
   }
 

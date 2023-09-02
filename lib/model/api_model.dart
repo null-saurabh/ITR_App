@@ -15,13 +15,15 @@ class LoginResponse {
 class OTPResponse {
   final bool success;
   final String token;
+  final bool isNameSaved;
 
-  OTPResponse({required this.success, required this.token});
+  OTPResponse({required this.success, required this.token, required this.isNameSaved});
 
   factory OTPResponse.fromJson(Map<String, dynamic> json) {
     return OTPResponse(
       success: json['success'],
       token: json['token'],
+      isNameSaved: json['isNameSaved']
     );
   }
 }

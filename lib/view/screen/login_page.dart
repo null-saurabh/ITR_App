@@ -150,7 +150,7 @@ class _LoginBoxState extends State<LoginBox> {
                       fillColor: loginTextFieldColor(themeMode).withOpacity(0.5),
                       // border: OutlineInputBorder(
                       //   borderRadius: BorderRadius.circular(10),
-                      //   borderSide: BorderSide(color: Color(0xFFd7e9f9), width: 10.0),
+                      //   borderSide: BorderSide(color: Color(0xFFd7e9f9), width: 2.0),
                       // ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),

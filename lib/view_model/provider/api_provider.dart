@@ -15,6 +15,9 @@ class ApiProvider with ChangeNotifier {
   bool _isLoggedIn = false;
   bool get isLoggedIn => _isLoggedIn;
 
+  late bool _isNameSaved;
+  bool get isNamedSaved => _isNameSaved;
+
   final AuthService _authService = AuthService();
   final storage = const FlutterSecureStorage();
 
@@ -31,6 +34,7 @@ class ApiProvider with ChangeNotifier {
       notifyListeners();
     }
   }
+
   Future<bool> login(String phoneNumber) async {
     try {
       final response = await _authService.login(phoneNumber);
@@ -65,7 +69,6 @@ class ApiProvider with ChangeNotifier {
     }
   }
 
-
   Future<void> deletePerson(String personId) async {
     try {
       await _authService.deletePerson(personId, _token!);
@@ -79,10 +82,13 @@ class ApiProvider with ChangeNotifier {
 
   Future<bool> verifyOTP(String phoneNumber, String otp) async {
     try {
-      final response = await _authService.verifyOTP(phoneNumber, otp);
+      final response = await _authService.
+      verifyOTP(phoneNumber, otp);
       if (response.success) {
         _token = response.token;
         _isLoggedIn = true;
+        _isNameSaved = response.isNameSaved;
+
         await storage.write(key: 'token', value: _token!);
         notifyListeners();
         return true;
@@ -155,6 +161,16 @@ class ApiProvider with ChangeNotifier {
     }
   }
 
+  Future<bool> updateUserName(String name) async {
+    try {
+      return await _authService.updateName(name,_token!);
+    }
+    catch(error) {
+      _errorMessage = 'Failed to update Name';
+      notifyListeners();
+      rethrow;
+    }
+  }
   Future<bool> uploadDocuments(List<File> documents, String personId) async {
     if (_token == null) {
       _errorMessage = 'Not authenticated';

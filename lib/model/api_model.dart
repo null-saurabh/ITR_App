@@ -199,3 +199,38 @@ class PaymentData {
   }
 }
 
+class UserProfile {
+  final String id;
+  final String phoneNumber;
+  final String? otp;
+  final String role;
+  final bool activate;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final String name;
+
+  UserProfile({
+    required this.id,
+    required this.phoneNumber,
+    this.otp,
+    required this.role,
+    required this.activate,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.name,
+  });
+
+  factory UserProfile.fromJson(Map<String, dynamic> json) {
+    return UserProfile(
+      id: json['_id'],
+      phoneNumber: json['phoneNumber'],
+      otp: json['otp'],
+      role: json['role'],
+      activate: json['activate'],
+      createdAt: DateTime.parse(json['createdAt']),
+      updatedAt: DateTime.parse(json['updatedAt']),
+      name: json['name'],
+    );
+  }
+}
+

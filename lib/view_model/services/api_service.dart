@@ -44,6 +44,23 @@ class AuthService {
     }
   }
 
+  Future<UserProfile> myProfile(String token) async {
+    final response = await http.get(
+      Uri.parse('http://ec2-3-7-45-69.ap-south-1.compute.amazonaws.com:4000/api/user/profile/my-profile'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return UserProfile.fromJson(json.decode(response.body)['data']);
+    } else {
+      throw Exception("Failed to fetch profile");
+    }
+  }
+
+
   Future<bool> addPerson(String name, String phoneNumber,String token) async {
     final response = await http.post(
       Uri.parse('http://ec2-3-7-45-69.ap-south-1.compute.amazonaws.com:4000/api/user/person/addPerson'),

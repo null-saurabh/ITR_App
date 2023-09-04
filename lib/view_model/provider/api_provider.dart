@@ -18,6 +18,14 @@ class ApiProvider with ChangeNotifier {
   late bool _isNameSaved;
   bool get isNamedSaved => _isNameSaved;
 
+  UserProfile? _userProfile;
+  UserProfile? get userProfile {
+    if (_userProfile == null) {
+      fetchMyProfile();
+    }
+    return _userProfile;
+  }
+
   final AuthService _authService = AuthService();
   final storage = const FlutterSecureStorage();
 
@@ -50,6 +58,17 @@ class ApiProvider with ChangeNotifier {
       _errorMessage = 'Internet Error';
       notifyListeners();
       return false;
+    }
+  }
+
+  Future<void> fetchMyProfile() async {
+    try {
+      _userProfile = await _authService.myProfile(_token!);
+      notifyListeners();
+    } catch (error) {
+      _errorMessage = 'Failed to fetch profile';
+      notifyListeners();
+      rethrow;
     }
   }
 

@@ -20,7 +20,6 @@ class DrawerUi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -42,15 +41,20 @@ class DrawerUi extends StatelessWidget {
                     radius: 25.0,
                     child: Image.asset("assets/images/usercircle.png",height: 40,width: 40,),
                   ),
-                  const SizedBox(width: 10), // Provide some spacing
-                  const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text('Welcome!', style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500)),
-                      Text('+91 9876543210', style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500)),
-                    ],
-                  ),
+                  const SizedBox(width: 10),
+                  Consumer<ApiProvider>(
+                      builder: (context, apiProvider, _){
+                        final userProfile = apiProvider.userProfile;
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text('Welcome, ${userProfile?.name ?? "Guest"}!', style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w500)),
+                            Text(userProfile?.phoneNumber ?? "", style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w500)),
+                          ],
+                        );
+                      }
+                  )
                 ],
               ),
             ),

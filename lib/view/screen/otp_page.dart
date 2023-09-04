@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:itr_app/model/theme.colors.dart';
+import 'package:itr_app/view/screen/ask_name.dart';
 import 'package:itr_app/view/utils/login_successful_alert.dart';
 import 'package:itr_app/view/utils/otp_input_box.dart';
 import 'package:itr_app/view_model/provider/api_provider.dart';
@@ -53,7 +54,7 @@ class _OtpPageState extends State<OtpPage> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 OtpPageBox(phoneNumber: widget.phoneNumber,),
-                SizedBox(
+                const SizedBox(
                   height: 50,
                 ),
               ],
@@ -96,11 +97,19 @@ class _OtpPageBoxState extends State<OtpPageBox> {
 
     if(mounted){
       if (success) {
+        final bool isNameSaved =
+            Provider.of<ApiProvider>(context, listen: false).isNamedSaved;
+        if (isNameSaved){
         showDialog(
           context: context,
           barrierDismissible: false,
-          builder: (BuildContext context) => const ShowLoginSuccessfulDialog(),
-        );
+          builder: (BuildContext context) => const ShowLoginSuccessfulDialog());
+        }
+        else {
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => const AskName()),
+                  (Route<dynamic> route) => false);
+        }
       } else {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(userProvider.errorMessage!)));

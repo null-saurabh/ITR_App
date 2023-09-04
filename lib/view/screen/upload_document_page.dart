@@ -56,10 +56,10 @@ class _UploadDocumentState extends State<UploadDocument> {
 
       Provider.of<RazorPayProvider>(context, listen: false)
         ..onSuccess = () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => OrderStatus(paymentStatus: true)));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const OrderStatus(paymentStatus: true)));
         }
         ..onError = () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => OrderStatus(paymentStatus: false)));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const OrderStatus(paymentStatus: false)));
         }
         ..openCheckout(
         amount: orderAmount,
@@ -101,8 +101,6 @@ class _UploadDocumentState extends State<UploadDocument> {
                 );
               },
             );
-            // placeOrder(widget.personId);
-
             try {
               final apiProvider = Provider.of<ApiProvider>(context, listen: false);
               await apiProvider.uploadDocuments(_documents, widget.personId);

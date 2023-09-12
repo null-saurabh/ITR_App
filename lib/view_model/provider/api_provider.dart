@@ -99,6 +99,17 @@ class ApiProvider with ChangeNotifier {
     }
   }
 
+  Future<void> updatePerson(String personId,String name, String number) async {
+    try {
+      await _authService.updatePerson(personId, _token!,name,number);
+      notifyListeners();
+    } catch (error) {
+      _errorMessage = 'Failed to delete person';
+      notifyListeners();
+      rethrow;
+    }
+  }
+
   Future<bool> verifyOTP(String phoneNumber, String otp) async {
     try {
       final response = await _authService.
@@ -146,7 +157,7 @@ class ApiProvider with ChangeNotifier {
     }
   }
 
-  Future<List<PaymentData>> getPaymentHistory() async {
+  Future<List<PaymentHistory>> getPaymentHistory() async {
     if (_token == null) {
       _errorMessage = 'Not authenticated';
       notifyListeners();
@@ -155,6 +166,46 @@ class ApiProvider with ChangeNotifier {
 
     try {
       final response = await _authService.fetchPaymentHistory(_token!);
+      if (response.success) {
+        return response.data;
+      } else {
+        _errorMessage = 'Failed to fetch data';
+        notifyListeners();
+        throw Exception('Failed to fetch data');
+      }
+    } catch (error) {
+      _errorMessage = 'Failed to fetch data';
+      notifyListeners();
+      rethrow;
+    }
+  }
+
+  Future<List<OrderForDashboard>> getOrdersForDashboard() async {
+    try {
+      final response = await _authService.fetchOrdersForDashboard(_token!);
+      if(response.success){
+        return response.data;
+      }
+      else {
+        _errorMessage = 'Failed to fetch data';
+        notifyListeners();
+        throw Exception('Failed to fetch data');
+      }
+    } catch (error) {
+      _errorMessage = 'Failed to fetch data';
+      notifyListeners();
+      rethrow;
+    }
+  }
+
+  Future<List<PaymentHistory>> getPaymentHistoryForPerson(String personId) async {
+    if (_token == null) {
+      _errorMessage = 'Not authenticated';
+      notifyListeners();
+      throw Exception('Not authenticated');
+    }
+    try {
+      final response = await _authService.fetchPaymentHistoryForPerson(personId,_token!);
       if (response.success) {
         return response.data;
       } else {

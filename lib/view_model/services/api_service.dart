@@ -5,7 +5,6 @@ import 'dart:convert';
 import 'package:itr_app/model/api_model.dart';
 
 class AuthService {
-  static const baseUrl = 'YOUR_BASE_API_URL';
 
   Future<LoginResponse> login(String phoneNumber) async {
     final response = await http.post(
@@ -24,7 +23,6 @@ class AuthService {
       throw Exception("Failed to login");
     }
   }
-
 
   Future<OTPResponse> verifyOTP(String phoneNumber, String otp) async {
     final response = await http.post(
@@ -60,6 +58,23 @@ class AuthService {
     }
   }
 
+  Future<bool> updateName(String name, String token) async {
+    final response = await http.put(
+      Uri.parse('http://ec2-3-7-45-69.ap-south-1.compute.amazonaws.com:4000/api/auth/update-name'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      },
+      body: jsonEncode({"name": name}),
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    }
+    else {
+      throw Exception("Failed to update Name");
+    }
+  }
 
   Future<bool> addPerson(String name, String phoneNumber,String token) async {
     final response = await http.post(
@@ -86,61 +101,6 @@ class AuthService {
     }
   }
 
-  Future<bool> updateName(String name, String token) async {
-    final response = await http.put(
-      Uri.parse('http://ec2-3-7-45-69.ap-south-1.compute.amazonaws.com:4000/api/auth/update-name'),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': token,
-      },
-      body: jsonEncode({"name": name}),
-    );
-
-    if (response.statusCode == 200) {
-        return true;
-    }
-    else {
-      throw Exception("Failed to update Name");
-    }
-  }
-
-
-  Future<PersonsResponse> getPersons(String token) async {
-    final response = await http.get(
-      Uri.parse('http://ec2-3-7-45-69.ap-south-1.compute.amazonaws.com:4000/api/user/person/'),
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": token,
-      },
-    );
-
-    if (response.statusCode == 200) {
-      return PersonsResponse.fromJson(json.decode(response.body));
-    } else {
-      throw Exception("Failed to fetch persons");
-    }
-  }
-
-  Future<OrderResponse> createOrder(String personId, String token) async {
-    final response = await http.post(
-      Uri.parse('http://ec2-3-7-45-69.ap-south-1.compute.amazonaws.com:4000/api/user/order/create-order'),
-      body: json.encode({
-        "person_id": personId,
-        "amount": 599,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": token,
-      },
-    );
-
-    if (response.statusCode == 200) {
-      return OrderResponse.fromJson(json.decode(response.body));
-    } else {
-      throw Exception("Failed to create order");
-    }
-  }
-
   Future<bool> deletePerson(String id, String token) async {
     final response = await http.delete(
       Uri.parse('http://ec2-3-7-45-69.ap-south-1.compute.amazonaws.com:4000/api/user/person/$id'),
@@ -158,6 +118,42 @@ class AuthService {
       } else {
         throw Exception("Failed to delete person");
       }
+    }
+  }
+
+  Future<bool> updatePerson(String id,String token,String name, String number) async {
+    final response = await http.put(
+      Uri.parse('http://ec2-3-7-45-69.ap-south-1.compute.amazonaws.com:4000/api/user/person/$id'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token,
+      },
+      body: jsonEncode({
+        "name": name,
+        "panCardNumber": number
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      throw Exception('Failed to update user');
+    }
+  }
+
+  Future<PersonsResponse> getPersons(String token) async {
+    final response = await http.get(
+      Uri.parse('http://ec2-3-7-45-69.ap-south-1.compute.amazonaws.com:4000/api/user/person/'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return PersonsResponse.fromJson(json.decode(response.body));
+    } else {
+      throw Exception("Failed to fetch persons");
     }
   }
 
@@ -191,8 +187,27 @@ class AuthService {
     }
   }
 
+  Future<OrderResponse> createOrder(String personId, String token) async {
+    final response = await http.post(
+      Uri.parse('http://ec2-3-7-45-69.ap-south-1.compute.amazonaws.com:4000/api/user/order/create-order'),
+      body: json.encode({
+        "person_id": personId,
+        "amount": 599,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token,
+      },
+    );
 
-  Future<PaymentHistory> fetchPaymentHistory(String token) async {
+    if (response.statusCode == 200) {
+      return OrderResponse.fromJson(json.decode(response.body));
+    } else {
+      throw Exception("Failed to create order");
+    }
+  }
+
+  Future<PaymentHistoriesResponse> fetchPaymentHistory(String token) async {
 
     final response = await http.get(
         Uri.parse("http://ec2-3-7-45-69.ap-south-1.compute.amazonaws.com:4000/api/user/payment/payment-history"),
@@ -203,9 +218,44 @@ class AuthService {
     );
 
     if (response.statusCode == 200) {
-      return PaymentHistory.fromJson(json.decode(response.body));
+      return PaymentHistoriesResponse.fromJson(json.decode(response.body));
     } else {
       throw Exception('Failed to fetch payment history');
     }
   }
+
+  Future<PaymentHistoriesResponse> fetchPaymentHistoryForPerson(String personId, String token) async {
+
+    final response = await http.get(
+        Uri.parse("http://ec2-3-7-45-69.ap-south-1.compute.amazonaws.com:4000/api/user/payment/payment-history/$personId"),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return PaymentHistoriesResponse.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to fetch payment history');
+    }
+  }
+
+  Future<OrderForDashboardResponse> fetchOrdersForDashboard(String token) async {
+    final response = await http.get(
+      Uri.parse(
+          "http://ec2-3-7-45-69.ap-south-1.compute.amazonaws.com:4000/api/user/order/orders-for-dashboard"),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return OrderForDashboardResponse.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to fetch orders for dashboard');
+    }
+  }
+
 }

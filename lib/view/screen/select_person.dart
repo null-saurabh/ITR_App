@@ -11,6 +11,7 @@ class SelectPerson extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final apiProvider = Provider.of<ApiProvider>(context, listen: false);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
       appBar: AppBar(
@@ -27,9 +28,9 @@ class SelectPerson extends StatelessWidget {
         builder: (ctx, apiProvider, _) {
           return FutureBuilder<List<Person>>(
             future: apiProvider.getPersons(),
-            builder: (context, snapshot) {
+            builder: (contexts, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator(color: Colors.grey,));
               } else if (snapshot.hasError) {
                 return Center(child: Text('Error: ${snapshot.error}'));
               } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -40,11 +41,12 @@ class SelectPerson extends StatelessWidget {
                   padding: const EdgeInsets.all(15.0),
                   child: ListView.builder(
                     itemCount: persons.length,
-                    itemBuilder: (context, index) {
+                    itemBuilder: (contexts, index) {
                       return SelectPersonCard(
                         name: persons[index].name,
                         id: persons[index].id,
                         phoneNumber: persons[index].phoneNumber,
+                        contextMain: context
                       );
                     },
                   ),

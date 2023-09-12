@@ -28,7 +28,6 @@ class OTPResponse {
   }
 }
 
-
 class Person {
   final String id;
   final String name;
@@ -134,90 +133,82 @@ class OrderResponse {
 }
 
 class PaymentHistory {
-  final bool success;
-  final List<PaymentData> data;
-  final int count;
-
-  PaymentHistory({
-    required this.success,
-    required this.data,
-    required this.count,
-  });
-
-  factory PaymentHistory.fromJson(Map<String, dynamic> json) {
-    return PaymentHistory(
-      success: json['success'],
-      data: (json['data'] as List)
-          .map((paymentDataJson) => PaymentData.fromJson(paymentDataJson))
-          .toList(),
-      count: json['count'],
-    );
-  }
-}
-
-class PaymentData {
   final String id;
+  final String dateTime;
   final int amount;
-  final String paymentId;
+  final String transactionId;
   final String userId;
   final String personId;
   final String orderId;
   final String status;
   final String? comment;
-  final String dateTime;
-  final DateTime createdAt;
-  final DateTime updatedAt;
 
-  PaymentData({
+  PaymentHistory({
     required this.id,
+    required this.dateTime,
     required this.amount,
-    required this.paymentId,
+    required this.transactionId,
     required this.userId,
     required this.personId,
     required this.orderId,
     required this.status,
     this.comment,
-    required this.dateTime,
-    required this.createdAt,
-    required this.updatedAt,
   });
 
-  factory PaymentData.fromJson(Map<String, dynamic> json) {
-    return PaymentData(
+  factory PaymentHistory.fromJson(Map<String, dynamic> json) {
+    return PaymentHistory(
       id: json['_id'],
+      dateTime: json['dateTime'],
       amount: json['amount'],
-      paymentId: json['paymentId'],
+      transactionId: json['transactionId'],
       userId: json['userId'],
       personId: json['personId'],
       orderId: json['orderId'],
       status: json['status'],
       comment: json['comment'],
-      dateTime: json['dateTime'],
-      createdAt: DateTime.parse(json['createdAt']),
-      updatedAt: DateTime.parse(json['updatedAt']),
+    );
+  }
+}
+
+class PaymentHistoriesResponse {
+  final bool success;
+  final List<PaymentHistory> data;
+  final int count;
+
+  PaymentHistoriesResponse({
+    required this.success,
+    required this.data,
+    required this.count,
+  });
+
+  factory PaymentHistoriesResponse.fromJson(Map<String, dynamic> json) {
+    return PaymentHistoriesResponse(
+      success: json['success'],
+      data: (json['data'] as List).map((i) => PaymentHistory.fromJson(i)).toList(),
+      count: json['count'],
     );
   }
 }
 
 class UserProfile {
-  final String id;
-  final String phoneNumber;
+  final String? id;
+  final String? phoneNumber;
   final String? otp;
-  final String role;
-  final bool activate;
+  final String? role;
+  final bool? activate;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final String name;
+  final String? name;
 
   UserProfile({
-    required this.id,
-    required this.phoneNumber,
+    this.id,
+    this.phoneNumber,
     this.otp,
-    required this.role,
-    required this.activate,
+    this.role,
+    this.activate,
     required this.createdAt,
     required this.updatedAt,
-    required this.name,
+    this.name,
   });
 
   factory UserProfile.fromJson(Map<String, dynamic> json) {
@@ -233,4 +224,63 @@ class UserProfile {
     );
   }
 }
+
+class OrderForDashboard {
+  final String id;
+  final String orderStatus;
+  final String orderId;
+  final int amount;
+  final String personId;
+  final String userId;
+  final bool seen;
+  final String createdAt;
+  final String updatedAt;
+
+  OrderForDashboard({
+    required this.id,
+    required this.orderStatus,
+    required this.orderId,
+    required this.amount,
+    required this.personId,
+    required this.userId,
+    required this.seen,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  factory OrderForDashboard.fromJson(Map<String, dynamic> json) {
+    return OrderForDashboard(
+      id: json['_id'],
+      orderStatus: json['orderStatus'],
+      orderId: json['orderId'],
+      amount: json['amount'],
+      personId: json['personId'],
+      userId: json['userId'],
+      seen: json['seen'],
+      createdAt: json['createdAt'],
+      updatedAt: json['updatedAt'],
+    );
+  }
+}
+
+class OrderForDashboardResponse {
+  final bool success;
+  final List<OrderForDashboard> data;
+  final int count;
+
+  OrderForDashboardResponse({
+    required this.success,
+    required this.data,
+    required this.count,
+  });
+
+  factory OrderForDashboardResponse.fromJson(Map<String, dynamic> json) {
+    return OrderForDashboardResponse(
+      success: json['success'],
+      data: (json['data'] as List).map((i) => OrderForDashboard.fromJson(i)).toList(),
+      count: json['count'],
+    );
+  }
+}
+
 

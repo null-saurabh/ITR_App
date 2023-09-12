@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:itr_app/model/theme.colors.dart';
 import 'package:itr_app/view/screen/upload_document_page.dart';
+import 'package:itr_app/view/utils/bottomsheet_add_person.dart';
 import 'package:itr_app/view/utils/select_person_extension.dart';
 import 'package:itr_app/view_model/provider/api_provider.dart';
 import 'package:provider/provider.dart';
@@ -10,10 +11,12 @@ class SelectPersonCard extends StatefulWidget {
   final String name;
   final String phoneNumber;
   final String id;
+  final BuildContext contextMain;
   const SelectPersonCard({
     required this.name,
     required this.id,
     required this.phoneNumber,
+    required this.contextMain,
     super.key,
   });
 
@@ -24,13 +27,15 @@ class SelectPersonCard extends StatefulWidget {
 class _SelectPersonCardState extends State<SelectPersonCard> {
   int quarterTurns = 1;
   bool showExtensions = false;
-  List<bool> paymentStatusList = [true, false, false];
+  // List<bool> paymentStatusList = [true, false, false];
 
   @override
   Widget build(BuildContext context) {
     final themeMode = Theme.of(context).brightness == Brightness.dark
         ? ThemeMode.dark
         : ThemeMode.light;
+    // final apiProvider = Provider.of<ApiProvider>(context, listen: false);
+
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -103,10 +108,9 @@ class _SelectPersonCardState extends State<SelectPersonCard> {
                       PopupMenuButton<String>(
                         icon: const Icon(Icons.more_vert),
                         onSelected: (String result) async{
-                          if (result == 'option1') {
-                            // Perform action for option 1
+                          if (result == 'Edit') {
+                            showAddPersonBottomSheet(widget.contextMain,editPerson: true,initialName: widget.name,initialNumber: widget.phoneNumber,personId: widget.id);
                           } else if (result == 'Delete') {
-                            print("a");
                             try {
                               await Provider.of<ApiProvider>(context, listen: false).deletePerson(widget.id);
                             } catch (error) {
@@ -166,19 +170,19 @@ class _SelectPersonCardState extends State<SelectPersonCard> {
                     ],
                   ),
                   Row(children: [
-                    IconButton(
-                        onPressed: () async {
-                          try {
-                            await Provider.of<ApiProvider>(context,
-                                    listen: false)
-                                .deletePerson(widget.id);
-                          } catch (error) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Failed to delete Person')));
-                          }
-                        },
-                        icon: const Icon(Icons.delete_forever)),
+                    // IconButton(
+                    //     onPressed: () async {
+                    //       try {
+                    //         await Provider.of<ApiProvider>(context,
+                    //                 listen: false)
+                    //             .deletePerson(widget.id);
+                    //       } catch (error) {
+                    //         ScaffoldMessenger.of(context).showSnackBar(
+                    //             const SnackBar(
+                    //                 content: Text('Failed to delete Person')));
+                    //       }
+                    //     },
+                    //     icon: const Icon(Icons.delete_forever)),
                     RotatedBox(
                         quarterTurns: quarterTurns,
                         child: GestureDetector(
@@ -190,18 +194,41 @@ class _SelectPersonCardState extends State<SelectPersonCard> {
                             });
                           },
                         )),
+                    const SizedBox(width: 10,)
                   ]),
                 ],
               ),
               Visibility(
                 visible: showExtensions,
-                child: Column(children: [
-                  ...List.generate(2, (index) {
-                    return SelectPersonCardExtension(
-                      paymentStatus: paymentStatusList[index],
+                child:Consumer<ApiProvider>(
+                  builder: (ctx,apiProvider,_){
+                    return FutureBuilder(
+                        future: apiProvider.getPaymentHistoryForPerson(widget.id),
+                        builder: (context, snapshot){
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return const Center(child: CircularProgressIndicator(color: Colors.grey,));
+                          }
+                          else if (snapshot.hasError) {
+                            return Center(child: Text('Error: ${snapshot.error}'));
+                          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                            return const Center(child: Text('No Payment Data Available.'));
+                          }
+                          else{
+                            final paymentHistory = snapshot.data!;
+                          return Column(children: [
+                            ...List.generate(paymentHistory.length, (index) {
+                              return SelectPersonCardExtension(
+                                paymentStatus: paymentHistory[index].status == "Completed" ? true : false,
+                                transactionId: paymentHistory[index].transactionId,
+                                dateAndTime: DateTime.parse(paymentHistory[index].dateTime)
+                              );
+                            })
+                          ]);
+                          }
+                        }
                     );
-                  })
-                ]),
+                  },
+                )
               ),
             ],
           ),

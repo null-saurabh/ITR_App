@@ -4,12 +4,12 @@ import 'package:itr_app/view/utils/elevated_button_gradiant.dart';
 import 'package:itr_app/view_model/provider/api_provider.dart';
 import 'package:provider/provider.dart';
 
-void showAddPersonBottomSheet(BuildContext context) {
+void showAddPersonBottomSheet(BuildContext context,{bool editPerson = false,String? initialName, String? initialNumber, String? personId}) {
   final themeMode = Theme.of(context).brightness == Brightness.dark
       ? ThemeMode.dark
       : ThemeMode.light;
-  final nameController = TextEditingController();
-  final phoneNumberController = TextEditingController();
+  final nameController = TextEditingController(text: initialName ?? "");
+  final phoneNumberController = TextEditingController(text: initialNumber ?? "");
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
 
@@ -48,10 +48,16 @@ void showAddPersonBottomSheet(BuildContext context) {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      const Text(
-                        "Add New Person",
+                      editPerson
+                      ?const Text(
+                        "Edit Person",
                         style:
                             TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      )
+                      :const Text(
+                        "Add New Person",
+                        style:
+                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 20),
                       Text(
@@ -140,18 +146,32 @@ void showAddPersonBottomSheet(BuildContext context) {
                             if(formKey.currentState!.validate()){
                             final name = nameController.text;
                             final phoneNumber = phoneNumberController.text;
-                            try {
-                              await Provider.of<ApiProvider>(context, listen: false).addPerson(name, phoneNumber);
-                              Navigator.pop(context);
-                            } catch (error) {
-                              if (error.toString() == "Exception: Already added person with this phone number") {
+                            if (editPerson == false){
+                              try {
+                                await Provider.of<ApiProvider>(context, listen: false).addPerson(name, phoneNumber);
+                                Navigator.pop(context);
+                              } catch (error) {
+                                if (error.toString() == "Exception: Already added person with this phone number") {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text('Already added person with this phone number')),
+                                  );
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text('Failed to add person')),
+                                  );
+                                }
+                              }
+                            }
+                            else{
+                              try {
+                                await Provider.of<ApiProvider>(context,listen: false).updatePerson(personId!, name, phoneNumber);
+                                Navigator.pop(context);
+                              }
+                              catch(error){
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Already added person with this phone number')),
+                                  const SnackBar(content: Text('Failed to edit person')),
                                 );
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Failed to add person')),
-                                );
+                                rethrow;
                               }
                             }
                           }},

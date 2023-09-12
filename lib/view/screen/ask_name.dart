@@ -51,12 +51,12 @@ class _AskNameState extends State<AskName> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(
-              height: 25,
+             SizedBox(
+              height: MediaQuery.of(context).size.height *0.05,
             ),
             Padding(
               padding: const EdgeInsets.all(30.0),
-              child: Image.asset('assets/images/loginimage.png'),
+              child: Image.asset(loginPageImage(themeMode),height: MediaQuery.of(context).size.height *0.3,width: MediaQuery.of(context).size.width *0.8,),
             ),
             const Text("Welcome to All India ITR",
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),

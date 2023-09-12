@@ -49,7 +49,7 @@ class DrawerUi extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text('Welcome, ${userProfile?.name ?? "Guest"}!', style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w500)),
+                            Text('Welcome, ${userProfile?.name ?? "Guest"}!', style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w500),overflow: TextOverflow.ellipsis,),
                             Text(userProfile?.phoneNumber ?? "", style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w500)),
                           ],
                         );

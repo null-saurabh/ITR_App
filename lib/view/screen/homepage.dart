@@ -3,7 +3,6 @@ import 'package:itr_app/model/theme.colors.dart';
 import 'package:itr_app/view/screen/select_person.dart';
 import 'package:itr_app/view/utils/drawer.dart';
 import 'package:itr_app/view/utils/floating_action_button.dart';
-import 'package:itr_app/view/utils/select_person_extension.dart';
 import 'package:itr_app/view_model/provider/api_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -42,74 +41,7 @@ class HomePage extends StatelessWidget {
                         backgroundColor: Colors.transparent,
                       ),
                       const SizedBox(height: 20,),
-                      Stack(children:
-                          [
                       Image.asset(homePageImage(themeMode),height: MediaQuery.of(context).size.height *0.3,width: MediaQuery.of(context).size.width *0.8,),
-                            Column(
-                              children: [
-                                SizedBox(height: 75,),
-                                // Spacer(),
-                                Consumer<ApiProvider>(
-                                  builder: (ctx,apiProvider,_){
-                                    return FutureBuilder(
-                                        future: apiProvider.getOrdersForDashboard(),
-                                        builder: (context, snapshot){
-                                          if (snapshot.connectionState == ConnectionState.waiting) {
-                                            return const Center(child: CircularProgressIndicator(color: Colors.grey,));
-                                          }
-                                          else if (snapshot.hasError) {
-                                            return Center(child: Text('Error: ${snapshot.error}'));
-                                          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                                            return const SizedBox(height: 1,);
-                                          }
-                                          else{
-                                            final ordersForDashboard = snapshot.data!;
-                                            return Padding(
-                                              padding: const EdgeInsets.all(12.0),
-                                              child: Container(
-                                                height: (MediaQuery.of(context).size.height /2) -250 ,
-                                                color: Colors.white,
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(4.0),
-                                                  child: ListView.builder(
-                                                    padding: const EdgeInsets.only(top: 0.0),
-                                                    itemCount: ordersForDashboard.length,
-                                                    itemBuilder: (ctx, index) {
-                                                      if (ordersForDashboard[index].orderStatus == "paymentSuccessful") {
-                                                        return SelectPersonCardExtension(
-                                                          paymentStatus:
-                                                          ordersForDashboard[index]
-                                                              .orderStatus ==
-                                                              "paymentSuccessful"
-                                                              ? true
-                                                              : false,
-                                                          transactionId:
-                                                          ordersForDashboard[index]
-                                                              .orderId,
-                                                          dateAndTime: DateTime.parse(
-                                                              ordersForDashboard[index]
-                                                                  .createdAt),
-                                                          dashBoard: true,
-                                                          itrStatus: false,
-                                                        );
-                                                      }
-                                                      else {
-                                                        return const SizedBox.shrink();
-                                                      }
-                                                    },
-                                                  ),
-                                                ),
-                                              ),
-                                            );
-                                          }
-                                        }
-                                    );
-                                  },
-                                ),
-                              ],
-                            )
-                      ]
-                      ),
                     ],
                   ),
                 ),
@@ -126,8 +58,8 @@ class HomePage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(
-                  height: 180,
+               SizedBox(
+                  height: MediaQuery.of(context).size.height *0.15
                 ),
                 Container(
                     width: MediaQuery.of(context).size.width *

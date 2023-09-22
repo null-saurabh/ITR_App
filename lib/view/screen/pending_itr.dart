@@ -25,44 +25,40 @@ class PendingItr extends StatelessWidget {
                   else if (snapshot.hasError) {
                     return Center(child: Text('Error: ${snapshot.error}'));
                   } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const SizedBox(height: 1,);
+                    return const Text("No ITR filed");
                   }
                   else{
                     final ordersForDashboard = snapshot.data!;
                     return Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child: Container(
-                        height: (MediaQuery.of(context).size.height /2) -250 ,
-                        color: Colors.white,
-                        child: Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: ListView.builder(
-                            padding: const EdgeInsets.only(top: 0.0),
-                            itemCount: ordersForDashboard.length,
-                            itemBuilder: (ctx, index) {
-                              if (ordersForDashboard[index].orderStatus == "paymentSuccessful") {
-                                return SelectPersonCardExtension(
-                                  paymentStatus:
-                                  ordersForDashboard[index]
-                                      .orderStatus ==
-                                      "paymentSuccessful"
-                                      ? true
-                                      : false,
-                                  transactionId:
-                                  ordersForDashboard[index]
-                                      .orderId,
-                                  dateAndTime: DateTime.parse(
-                                      ordersForDashboard[index]
-                                          .createdAt),
-                                  dashBoard: true,
-                                  itrStatus: false,
-                                );
-                              }
-                              else {
-                                return const SizedBox.shrink();
-                              }
-                            },
-                          ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: ListView.builder(
+                          padding: const EdgeInsets.only(top: 0.0),
+                          itemCount: ordersForDashboard.length,
+                          itemBuilder: (ctx, index) {
+                            if (ordersForDashboard[index].orderStatus == "paymentSuccessful") {
+                              return SelectPersonCardExtension(
+                                paymentStatus:
+                                ordersForDashboard[index]
+                                    .orderStatus ==
+                                    "paymentSuccessful"
+                                    ? true
+                                    : false,
+                                transactionId:
+                                ordersForDashboard[index]
+                                    .orderId,
+                                dateAndTime: DateTime.parse(
+                                    ordersForDashboard[index]
+                                        .createdAt),
+                                dashBoard: true,
+                                itrStatus: false,
+                              );
+                            }
+                            else {
+                              return const SizedBox.shrink();
+                            }
+                          },
                         ),
                       ),
                     );

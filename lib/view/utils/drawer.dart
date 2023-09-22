@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:itr_app/view/screen/login_page.dart';
 import 'package:itr_app/view/screen/payment_history.dart';
+import 'package:itr_app/view/screen/pending_itr.dart';
 import 'package:itr_app/view/screen/select_person.dart';
 import 'package:itr_app/view_model/provider/api_provider.dart';
 import 'package:itr_app/view_model/provider/theme_changer_provider.dart';
@@ -65,7 +66,8 @@ class DrawerUi extends StatelessWidget {
                context, MaterialPageRoute(builder: (context) => const PaymentHistoryScreen())); }),
           const SizedBox(height: 20),
           const DrawerListTile(title:"Dark Mode", icon: Icons.dark_mode_outlined,widgetName: "Switch",),
-          const DrawerListTile(title:"Pending ITRs", icon: Icons.question_answer_outlined),
+          DrawerListTile(title:"Pending ITRs", icon: Icons.question_answer_outlined,onTap:(){ Navigator.push(
+              context, MaterialPageRoute(builder: (context) => const PendingItr())); }),
           const DrawerListTile(title:"Terms & Conditions", icon: Icons.privacy_tip_outlined),
           // const DrawerListTile(title:"FAQs", icon: Icons.question_answer_outlined),
           const DrawerListTile(title:"Rate Us", icon: Icons.star_border_outlined),

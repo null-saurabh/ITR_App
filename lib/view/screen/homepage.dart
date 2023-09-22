@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:itr_app/model/theme.colors.dart';
+import 'package:itr_app/view/screen/pending_itr.dart';
 import 'package:itr_app/view/screen/select_person.dart';
 import 'package:itr_app/view/utils/drawer.dart';
 import 'package:itr_app/view/utils/floating_action_button.dart';
 import 'package:itr_app/view_model/provider/api_provider.dart';
 import 'package:provider/provider.dart';
 
-
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final themeMode = Theme.of(context).brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
+    final themeMode = Theme.of(context).brightness == Brightness.dark
+        ? ThemeMode.dark
+        : ThemeMode.light;
 
     return Scaffold(
-      floatingActionButton:const CustomFAB(),
+      floatingActionButton: const CustomFAB(),
       drawer: const DrawerUi(),
       body: Stack(
         children: [
@@ -24,24 +26,33 @@ class HomePage extends StatelessWidget {
               Expanded(
                 flex: 6,
                 child: Container(
-                  decoration: BoxDecoration(
-                    gradient: blueGradient
-                  ),
+                  decoration: BoxDecoration(gradient: blueGradient),
                   child: Column(
                     children: [
-                      const SizedBox(height: 10,),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       AppBar(
-                        title:Consumer<ApiProvider>(
-                          builder: (context,apiProvider, _){
+                        title: Consumer<ApiProvider>(
+                          builder: (context, apiProvider, _) {
                             final userProfile = apiProvider.userProfile;
-                           return Text('Welcome, ${userProfile?.name ?? "Guest"}!',style: const TextStyle(fontWeight: FontWeight.w500,fontSize: 18));
+                            return Text(
+                                'Welcome, ${userProfile?.name ?? "Guest"}!',
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 18));
                           },
                         ),
                         elevation: 0,
                         backgroundColor: Colors.transparent,
                       ),
-                      const SizedBox(height: 20,),
-                      Image.asset(homePageImage(themeMode),height: MediaQuery.of(context).size.height *0.3,width: MediaQuery.of(context).size.width *0.8,),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Image.asset(
+                        homePageImage(themeMode),
+                        height: MediaQuery.of(context).size.height * 0.3,
+                        width: MediaQuery.of(context).size.width * 0.8,
+                      ),
                     ],
                   ),
                 ),
@@ -57,13 +68,29 @@ class HomePage extends StatelessWidget {
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-               SizedBox(
-                  height: MediaQuery.of(context).size.height *0.15
-                ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.15),
+                TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const PendingItr()));
+                    },
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          "Pending ITRs ",
+                          style:
+                              TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        Icon(Icons.arrow_forward_rounded)
+                      ],
+                    )),
                 Container(
-                    width: MediaQuery.of(context).size.width *
-                        0.9,
+                    width: MediaQuery.of(context).size.width * 0.9,
                     height: 265,
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.primary,
@@ -104,19 +131,14 @@ class HomePage extends StatelessWidget {
                             icon: Icon(Icons.navigate_next)),
                       ],
                     )),
-
               ],
             ),
           ),
-
         ],
       ),
     );
   }
 }
-
-
-
 
 class HomePageListTile extends StatelessWidget {
   const HomePageListTile({
@@ -134,7 +156,9 @@ class HomePageListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeMode = Theme.of(context).brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
+    final themeMode = Theme.of(context).brightness == Brightness.dark
+        ? ThemeMode.dark
+        : ThemeMode.light;
     return Padding(
       padding: const EdgeInsets.only(left: 25.0, right: 25),
       child: Container(
@@ -146,12 +170,12 @@ class HomePageListTile extends StatelessWidget {
               BoxShadow(
                 color: Colors.blue.withOpacity(0.75),
                 blurRadius: 1,
-                offset: const Offset(0,0), // changes position of shadow
+                offset: const Offset(0, 0), // changes position of shadow
               ),
             ]),
         child: Center(
           child: ListTile(
-            onTap: (){
+            onTap: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -166,7 +190,13 @@ class HomePageListTile extends StatelessWidget {
                 ? Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Text("₹599",style: TextStyle(color: Colors.blue,fontWeight: FontWeight.w600,fontSize: 16),),
+                      const Text(
+                        "₹599",
+                        style: TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16),
+                      ),
                       icon,
                     ],
                   )
@@ -177,7 +207,3 @@ class HomePageListTile extends StatelessWidget {
     );
   }
 }
-
-
-
-

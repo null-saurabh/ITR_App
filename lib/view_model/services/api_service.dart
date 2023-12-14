@@ -157,6 +157,22 @@ class AuthService {
     }
   }
 
+  Future<SinglePersonResponse> getSinglePerson(String token,String personId) async {
+    final response = await http.get(
+      Uri.parse('http://ec2-3-7-45-69.ap-south-1.compute.amazonaws.com:4000/api/user/person/$personId'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return SinglePersonResponse.fromJson(json.decode(response.body));
+    } else {
+      throw Exception("Failed to fetch persons");
+    }
+  }
+
   Future<bool> uploadDocuments(List<File> documents, String personId, String token) async {
     var request = http.MultipartRequest(
       'POST',

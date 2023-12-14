@@ -18,6 +18,9 @@ class ApiProvider with ChangeNotifier {
   late bool _isNameSaved;
   bool get isNamedSaved => _isNameSaved;
 
+  List<OrderForDashboard>? _ordersForDashboard;
+  List<OrderForDashboard>? get ordersForDashboard => _ordersForDashboard;
+
   UserProfile? _userProfile;
   UserProfile? get userProfile {
     if (_userProfile == null) {
@@ -80,7 +83,10 @@ class ApiProvider with ChangeNotifier {
     }
 
     try {
-      return await _authService.createOrder(personId, _token!);
+      OrderResponse orderResponse = await _authService.createOrder(personId, _token!);
+      updateOrdersForDashboard();
+      return orderResponse;
+
     } catch (error) {
       _errorMessage = 'Failed to create order';
       notifyListeners();
@@ -157,6 +163,29 @@ class ApiProvider with ChangeNotifier {
     }
   }
 
+  Future<Person> getSinglePerson(String personId) async {
+    if (_token == null) {
+      _errorMessage = 'Not authenticated';
+      notifyListeners();
+      throw Exception('Not authenticated');
+    }
+
+    try {
+      final response = await _authService.getSinglePerson(_token!,personId);
+      if (response.success) {
+        return response.data;
+      } else {
+        _errorMessage = 'Failed to fetch data';
+        notifyListeners();
+        throw Exception('Failed to fetch data');
+      }
+    } catch (error) {
+      _errorMessage = 'Failed to fetch data';
+      notifyListeners();
+      rethrow;
+    }
+  }
+
   Future<List<PaymentHistory>> getPaymentHistory() async {
     if (_token == null) {
       _errorMessage = 'Not authenticated';
@@ -198,6 +227,16 @@ class ApiProvider with ChangeNotifier {
     }
   }
 
+  Future<void> updateOrdersForDashboard() async {
+    try {
+      final orders = await getOrdersForDashboard();
+      _ordersForDashboard = orders;
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
+  }
+
   Future<List<PaymentHistory>> getPaymentHistoryForPerson(String personId) async {
     if (_token == null) {
       _errorMessage = 'Not authenticated';
@@ -220,7 +259,6 @@ class ApiProvider with ChangeNotifier {
     }
   }
 
-
   Future<bool> addPerson(String name, String phoneNumber) async {
     try {
       return await _authService.addPerson(name, phoneNumber,_token!);
@@ -241,6 +279,7 @@ class ApiProvider with ChangeNotifier {
       rethrow;
     }
   }
+
   Future<bool> uploadDocuments(List<File> documents, String personId) async {
     if (_token == null) {
       _errorMessage = 'Not authenticated';

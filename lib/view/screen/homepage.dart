@@ -7,15 +7,22 @@ import 'package:itr_app/view/utils/floating_action_button.dart';
 import 'package:itr_app/view_model/provider/api_provider.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
     final themeMode = Theme.of(context).brightness == Brightness.dark
         ? ThemeMode.dark
         : ThemeMode.light;
-
+    print('home');
+    Provider.of<ApiProvider>(context, listen: false).updateOrdersForDashboard();
     return Scaffold(
       floatingActionButton: const CustomFAB(),
       drawer: const DrawerUi(),
@@ -71,24 +78,59 @@ class HomePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 SizedBox(height: MediaQuery.of(context).size.height * 0.15),
-                TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const PendingItr()));
-                    },
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          "Pending ITRs ",
-                          style:
-                              TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                // if(Provider.of<ApiProvider>(context).ordersForDashboard != null &&  Provider.of<ApiProvider>(context).ordersForDashboard!.isNotEmpty)
+                // TextButton(
+                //     onPressed: () {
+                //       Navigator.push(
+                //           context,
+                //           MaterialPageRoute(
+                //               builder: (context) => const PendingItr()));
+                //     },
+                //     child: const Row(
+                //       mainAxisSize: MainAxisSize.min,
+                //       children: [
+                //         Text(
+                //           "Pending ITRs ",
+                //           style:
+                //               TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                //         ),
+                //         Icon(Icons.arrow_forward_rounded)
+                //       ],
+                //     )),
+                Consumer<ApiProvider>(
+                  builder: (context, apiProvider, _) {
+                    if (apiProvider.ordersForDashboard != null &&
+                        apiProvider.ordersForDashboard!.isNotEmpty) {
+                      return TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const PendingItr(),
+                            ),
+                          );
+                        },
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              "Pending ITRs ",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Icon(Icons.arrow_forward_rounded),
+                          ],
                         ),
-                        Icon(Icons.arrow_forward_rounded)
-                      ],
-                    )),
+                      );
+                    }
+                    else {
+                      // Return an empty container if no orders are present
+                      return  SizedBox(width: 1,);
+                    }
+                  },
+                ),
                 Container(
                     width: MediaQuery.of(context).size.width * 0.9,
                     height: 265,

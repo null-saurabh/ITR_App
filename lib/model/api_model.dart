@@ -82,6 +82,23 @@ class PersonsResponse {
   }
 }
 
+class SinglePersonResponse {
+  final bool success;
+  final Person data;
+
+  SinglePersonResponse({
+    required this.success,
+    required this.data,
+  });
+
+  factory SinglePersonResponse.fromJson(Map<String, dynamic> json) {
+    return SinglePersonResponse(
+      success: json['success'],
+      data: Person.fromJson(json['data']),
+    );
+  }
+}
+
 class OrderResponse {
   final String id;
   final String entity;
@@ -235,6 +252,7 @@ class OrderForDashboard {
   final bool seen;
   final String createdAt;
   final String updatedAt;
+  final Expert? expert; // Nullable field for orders with "assignExpert" status
 
   OrderForDashboard({
     required this.id,
@@ -246,19 +264,38 @@ class OrderForDashboard {
     required this.seen,
     required this.createdAt,
     required this.updatedAt,
+    this.expert,
   });
 
   factory OrderForDashboard.fromJson(Map<String, dynamic> json) {
     return OrderForDashboard(
-      id: json['_id'],
-      orderStatus: json['orderStatus'],
-      orderId: json['orderId'],
-      amount: json['amount'],
-      personId: json['personId'],
-      userId: json['userId'],
-      seen: json['seen'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
+      id: json['_id'] ?? '',
+      orderStatus: json['orderStatus'] ?? '',
+      orderId: json['orderId'] ?? '',
+      amount: json['amount'] ?? 0,
+      personId: json['personId'] ?? '',
+      userId: json['userId'] ?? '',
+      seen: json['seen'] ?? false,
+      createdAt: json['createdAt'] ?? '',
+      updatedAt: json['updatedAt'] ?? '',
+      expert: json['expert'] != null ? Expert.fromJson(json['expert']) : null,
+    );
+  }
+}
+
+class Expert {
+  final String id;
+  final String name;
+
+  Expert({
+    required this.id,
+    required this.name,
+  });
+
+  factory Expert.fromJson(Map<String, dynamic> json) {
+    return Expert(
+      id: json['id'] ?? '',
+      name: json['name'] ?? '',
     );
   }
 }
@@ -276,11 +313,12 @@ class OrderForDashboardResponse {
 
   factory OrderForDashboardResponse.fromJson(Map<String, dynamic> json) {
     return OrderForDashboardResponse(
-      success: json['success'],
-      data: (json['data'] as List).map((i) => OrderForDashboard.fromJson(i)).toList(),
-      count: json['count'],
+      success: json['success'] ?? false,
+      data: (json['data'] as List).map((orderJson) => OrderForDashboard.fromJson(orderJson)).toList(),
+      count: json['count'] ?? 0,
     );
   }
 }
+
 
 

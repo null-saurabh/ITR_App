@@ -69,7 +69,7 @@ class PaymentHistoryCard extends StatelessWidget {
                   Row(
                     children: [
                       const Text(
-                        "Transaction id : ",
+                        "Txn Id : ",
                         style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,

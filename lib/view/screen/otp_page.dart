@@ -164,9 +164,9 @@ class _OtpPageBoxState extends State<OtpPageBox> {
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 6,),
-            const Text(
-              " +91 98765 43210",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            Text(
+              widget.phoneNumber,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 15,),
             Row(

@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:itr_app/model/api_model.dart';
 import 'package:itr_app/model/theme.colors.dart';
 import 'package:itr_app/view/screen/homepage.dart';
 import 'package:itr_app/view/utils/bottom_navigation_button.dart';
-import 'package:itr_app/view/utils/drawer.dart';
+// import 'package:itr_app/view/utils/drawer.dart';
 import 'package:itr_app/view/utils/horizontal_line.dart';
 import 'package:itr_app/view/utils/order_status_info_card.dart';
 import 'package:itr_app/view/utils/wait_icon_for_order_status_page.dart';
 
 class OrderStatus extends StatelessWidget {
-  final bool paymentStatus;
-  const OrderStatus({required this.paymentStatus,super.key});
+  final OrderForDashboard order;
+  // final bool paymentStatus;
+  const OrderStatus({required this.order,super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,19 +30,23 @@ class OrderStatus extends StatelessWidget {
         padding: const EdgeInsets.only(top: 25.0, right: 15, left: 15),
         child: Column(
           children: [
-            const OrderStatusInfoCard(),
+           OrderStatusInfoCard(order: order,),
             const SizedBox(height: 20,),
             Container(
               // height: 100,
               decoration:BoxDecoration(
-                  boxShadow: [BoxShadow(blurRadius: 2, color: Colors.grey)],
+                  boxShadow: const [BoxShadow(blurRadius: 2, color: Colors.grey)],
                 color: Theme.of(context).colorScheme.primary,
               ),
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
-                child: paymentStatus
-                  ?const PaymentSuccessUi()
-                    :const PaymentFailUi(),
+                child: order.orderStatus == "paymentPending"
+                  ? const PaymentFailUi()
+                    :order.orderStatus == "assignExpert"
+                ? AssignExpertUi(expertName: order.expert!.name)
+                    : order.seen == true
+                  ?SuccessfulUi()
+                    :PendingUi()
               ),
             )
           ],
@@ -52,8 +58,10 @@ class OrderStatus extends StatelessWidget {
 
 
 
-class PaymentSuccessUi extends StatelessWidget {
-  const PaymentSuccessUi({
+class AssignExpertUi extends StatelessWidget {
+  final String expertName;
+  const AssignExpertUi({
+    required this.expertName,
     super.key,
   });
 
@@ -94,9 +102,9 @@ class PaymentSuccessUi extends StatelessWidget {
                     border: Border.all(color: const Color(0xff3291E9).withOpacity(0.6)),
                     color: const Color(0xff3291E9).withOpacity(0.12)
                   ),
-                  child: const Center(child: Padding(
+                  child: Center(child: Padding(
                     padding: EdgeInsets.all(8.0),
-                    child: Text("Your Tax Expert is Dummy Name, he/she will contact you within 24 hours."),
+                    child: Text("Your Tax Expert is $expertName, he/she will contact you within 24 hours."),
                   )),
                 ),
               ),
@@ -107,7 +115,7 @@ class PaymentSuccessUi extends StatelessWidget {
           children: [
             Image.asset("assets/images/wait.png",height: 24, width: 24,),
             const SizedBox(width: 10,),
-            const Text("Return Filed",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16),)
+            const Text("Return Filing Pending",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16),)
           ],
         ),
 
@@ -117,7 +125,140 @@ class PaymentSuccessUi extends StatelessWidget {
   }
 }
 
+class PendingUi extends StatelessWidget {
+  const PendingUi({
+    super.key,
+  });
 
+
+  @override
+  Widget build(BuildContext context) {
+    final themeMode = Theme.of(context).brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start  ,
+      children: [
+        Row(
+          children: [
+            Image.asset(successImage(themeMode),height: 24, width: 24,),
+            const SizedBox(width: 10,),
+            const Text("Payment Successful",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),)
+          ],
+        ),
+        const HorizontalLine(length: 30),
+        Row(
+          children: [
+            Image.asset("assets/images/wait.png",height: 24, width: 24,),
+            const SizedBox(width: 10,),
+            const Text("Assign Expert Pending",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),)
+          ],
+        ),
+        const HorizontalLine(length: 30,),
+        // Row(
+        //   crossAxisAlignment: CrossAxisAlignment.start,
+        //   children: [
+        //     const HorizontalLine(length: 100,),
+        //     const SizedBox(width: 10,),
+        //     Expanded(
+        //       child: Padding(
+        //         padding: const EdgeInsets.all(12.0),
+        //         child: Container(
+        //           height: 60,
+        //           decoration: BoxDecoration(
+        //             borderRadius: BorderRadius.circular(6),
+        //             border: Border.all(color: const Color(0xff3291E9).withOpacity(0.6)),
+        //             color: const Color(0xff3291E9).withOpacity(0.12)
+        //           ),
+        //           child: Center(child: Padding(
+        //             padding: EdgeInsets.all(8.0),
+        //             child: Text("Your Tax Expert is $expertName, he/she will contact you within 24 hours."),
+        //           )),
+        //         ),
+        //       ),
+        //     )
+        //   ],
+        // ),
+        Row(
+          children: [
+            Image.asset("assets/images/wait.png",height: 24, width: 24,),
+            const SizedBox(width: 10,),
+            const Text("Return Filing Pending",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16),)
+          ],
+        ),
+
+
+      ],
+    );
+  }
+}
+
+class SuccessfulUi extends StatelessWidget {
+  // final String expertName;
+  const SuccessfulUi({
+    // required this.expertName,
+    super.key,
+  });
+
+
+  @override
+  Widget build(BuildContext context) {
+    final themeMode = Theme.of(context).brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start  ,
+      children: [
+        Row(
+          children: [
+            Image.asset(successImage(themeMode),height: 24, width: 24,),
+            const SizedBox(width: 10,),
+            const Text("Payment Successful",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),)
+          ],
+        ),
+        const HorizontalLine(length: 30),
+        Row(
+          children: [
+            Image.asset(successImage(themeMode),height: 24, width: 24,),
+            const SizedBox(width: 10,),
+            const Text("Expert Assigned",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),)
+          ],
+        ),
+        const HorizontalLine(length: 30,),
+
+        // Row(
+        //   crossAxisAlignment: CrossAxisAlignment.start,
+        //   children: [
+        //     const HorizontalLine(length: 100,),
+        //     const SizedBox(width: 10,),
+        //     Expanded(
+        //       child: Padding(
+        //         padding: const EdgeInsets.all(12.0),
+        //         child: Container(
+        //           height: 60,
+        //           decoration: BoxDecoration(
+        //               borderRadius: BorderRadius.circular(6),
+        //               border: Border.all(color: const Color(0xff3291E9).withOpacity(0.6)),
+        //               color: const Color(0xff3291E9).withOpacity(0.12)
+        //           ),
+        //           child: Center(child: Padding(
+        //             padding: EdgeInsets.all(8.0),
+        //             child: Text("Your Tax Expert is $expertName."),
+        //           )),
+        //         ),
+        //       ),
+        //     )
+        //   ],
+        // ),
+        Row(
+          children: [
+            Image.asset(successImage(themeMode),height: 24, width: 24,),
+            const SizedBox(width: 10,),
+            const Text("Return Filed",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16),)
+          ],
+        ),
+
+
+      ],
+    );
+  }
+}
 
 class PaymentFailUi extends StatelessWidget {
   const PaymentFailUi({
@@ -141,16 +282,16 @@ class PaymentFailUi extends StatelessWidget {
         const HorizontalLine(length: 30),
          Row(
           children: [
-            WaitIconForOrderStatus(),
-            SizedBox(width: 10,),
+            const WaitIconForOrderStatus(),
+            const SizedBox(width: 10,),
             Text("Assign Expert",style: TextStyle(fontWeight: FontWeight.w400,fontSize: 16,color: orderStatusFailedTextColor(themeMode)),)
           ],
         ),
         const HorizontalLine(length: 30,),
        Row(
           children: [
-            WaitIconForOrderStatus(),
-            SizedBox(width: 10,),
+            const WaitIconForOrderStatus(),
+            const SizedBox(width: 10,),
             Text("Return Filed",style: TextStyle(fontWeight: FontWeight.w400,fontSize: 16,color: orderStatusFailedTextColor(themeMode)),)
           ],
         ),

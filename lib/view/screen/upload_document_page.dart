@@ -56,10 +56,10 @@ class _UploadDocumentState extends State<UploadDocument> {
 
       Provider.of<RazorPayProvider>(context, listen: false)
         ..onSuccess = () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const OrderStatus(paymentStatus: true)));
+          // Navigator.push(context, MaterialPageRoute(builder: (context) => const OrderStatus()));
         }
         ..onError = () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const OrderStatus(paymentStatus: false)));
+          // Navigator.push(context, MaterialPageRoute(builder: (context) => const OrderStatus(paymentStatus: false)));
         }
         ..openCheckout(
         amount: orderAmount,

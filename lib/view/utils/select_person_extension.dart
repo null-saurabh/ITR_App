@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:itr_app/model/api_model.dart';
 import 'package:itr_app/model/theme.colors.dart';
 import 'package:itr_app/view/screen/order_status.dart';
 
 class SelectPersonCardExtension extends StatelessWidget {
-  final bool paymentStatus;
-  final String transactionId;
-  final DateTime dateAndTime;
-  final bool dashBoard;
-  final bool? itrStatus;
+  final OrderForDashboard order;
+  // final bool paymentStatus;
+  // final String transactionId;
+  // final DateTime dateAndTime;
+  // final bool dashBoard;
+  // final bool? itrStatus;
 
   const SelectPersonCardExtension({
-    required this.paymentStatus,
-    required this.transactionId,
-    required this.dateAndTime,
-    this.dashBoard = false,
-    this.itrStatus,
+    required this.order,
+    // required this.paymentStatus,
+    // required this.transactionId,
+    // required this.dateAndTime,
+    // this.dashBoard = false,
+    // this.itrStatus,
     super.key,
   });
 
@@ -38,8 +41,8 @@ class SelectPersonCardExtension extends StatelessWidget {
 
     return GestureDetector(
       onTap: (){
-        // Navigator.push(
-        //     context, MaterialPageRoute(builder: (context) => OrderStatus(paymentStatus:paymentStatus)));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => OrderStatus(order: order)));
       },
       child: Card(
         color: cardExtensionColor(themeMode),
@@ -54,7 +57,8 @@ class SelectPersonCardExtension extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(formatYear(dateAndTime),style: TextStyle(color: selectPersonPageTitleColor(themeMode),fontSize: 17,fontWeight: FontWeight.w600)),
+                    Text(formatYear(DateTime.parse(order.createdAt)),style: TextStyle(color: selectPersonPageTitleColor(themeMode),fontSize: 17,fontWeight: FontWeight.w600)),
+                    if(order.seen == true)
                     Container(
                       width: 90,
                       height: 34,
@@ -83,7 +87,7 @@ class SelectPersonCardExtension extends StatelessWidget {
                       children: [
                         Text("Date",style: TextStyle(color: selectPersonPageSubtitleColor(themeMode),fontSize: 14,fontWeight: FontWeight.w400)),
                         const SizedBox(height: 5),
-                        Text(DateFormat('dd MMM yyyy').format(dateAndTime),style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,color: selectPersonPageTitleColor(themeMode))),
+                        Text(DateFormat('dd MMM yyyy').format(DateTime.parse(order.createdAt)),style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,color: selectPersonPageTitleColor(themeMode))),
                       ],
                     ),
                     Expanded(
@@ -92,22 +96,24 @@ class SelectPersonCardExtension extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            if (dashBoard == false) ...[
-                              Text("Payment Status",style: TextStyle(color: selectPersonPageSubtitleColor(themeMode),fontSize: 14,fontWeight: FontWeight.w400)),
-                              const SizedBox(height: 5),
-                              paymentStatus
-                                  ?const Text("Success",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,color: Color(0xff39AD3E)))
-                                  :const Text("Fail",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.red))
-                        ],
-                            if (dashBoard == true) ...[
+                        //     if (dashBoard == false) ...[
+                        //       Text("Payment Status",style: TextStyle(color: selectPersonPageSubtitleColor(themeMode),fontSize: 14,fontWeight: FontWeight.w400)),
+                        //       const SizedBox(height: 5),
+                        //       paymentStatus
+                        //           ?const Text("Success",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,color: Color(0xff39AD3E)))
+                        //           :const Text("Fail",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.red))
+                        // ],
+                        //     if (dashBoard == true) ...[
 
                               Text("ITR Status",style: TextStyle(color: selectPersonPageSubtitleColor(themeMode),fontSize: 14,fontWeight: FontWeight.w400)),
                               const SizedBox(height: 5),
-                              itrStatus!
+                              order.seen == true
                                   ?const Text("Completed",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,color: Color(0xff39AD3E)))
-                                  :const Text("Pending",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.red))
+                                  : order.orderStatus == "assignExpert"
+                              ?const Text("Expert Assigned",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,color: Color(0xff39AD3E)))
+                              :const Text("Pending",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,color: Color(0xff39AD3E)))
 
-                            ]
+                            // ]
 
                           ],
                         ),

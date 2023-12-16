@@ -126,6 +126,8 @@ class ApiProvider with ChangeNotifier {
         _isNameSaved = response.isNameSaved;
 
         await storage.write(key: 'token', value: _token!);
+        fetchMyProfile();
+        updateOrdersForDashboard();
         notifyListeners();
         return true;
       } else {
@@ -212,6 +214,24 @@ class ApiProvider with ChangeNotifier {
   Future<List<OrderForDashboard>> getOrdersForDashboard() async {
     try {
       final response = await _authService.fetchOrdersForDashboard(_token!);
+      if(response.success){
+        return response.data;
+      }
+      else {
+        _errorMessage = 'Failed to fetch data';
+        notifyListeners();
+        throw Exception('Failed to fetch data');
+      }
+    } catch (error) {
+      _errorMessage = 'Failed to fetch data';
+      notifyListeners();
+      rethrow;
+    }
+  }
+
+  Future<List<OrderForDashboard>> getOrdersForSinglePerson(String personId) async {
+    try {
+      final response = await _authService.fetchOrdersForSinglePerson(_token!,personId);
       if(response.success){
         return response.data;
       }

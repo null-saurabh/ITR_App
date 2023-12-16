@@ -11,12 +11,13 @@ class SelectPerson extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final scaffoldKey = GlobalKey<ScaffoldState>();
     // final apiProvider = Provider.of<ApiProvider>(context, listen: false);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.tertiary,
-        title: const Text("Select Person"),
+        title: const Text("Select Tax Payer"),
       ),
       bottomNavigationBar: BottomNavigationButton(
         text: "Add New Person",

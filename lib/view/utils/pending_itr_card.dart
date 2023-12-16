@@ -43,7 +43,9 @@ class PendingItrCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(formatYear(DateTime.parse(order.createdAt)),style: TextStyle(color: selectPersonPageTitleColor(themeMode),fontSize: 17,fontWeight: FontWeight.w600)),
+                    if(order.seen == true)
                     Container(
+
                       width: 90,
                       height: 34,
                       decoration: BoxDecoration(
@@ -59,6 +61,7 @@ class PendingItrCard extends StatelessWidget {
                           const Text("E-verified",style: TextStyle(color:  Color(0xff5AB0FF),fontWeight: FontWeight.w500,fontSize: 12),),
                         ],
                       ),)
+
                   ],
                 ),
                 const SizedBox(height: 15,),

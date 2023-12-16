@@ -60,14 +60,14 @@ class DrawerUi extends StatelessWidget {
               ),
             ),
           ),
-          DrawerListTile(title:"Persons", icon: Icons.groups_outlined,onTap:(){ Navigator.push(
+          DrawerListTile(title:"Tax Payers", icon: Icons.groups_outlined,onTap:(){ Navigator.push(
               context, MaterialPageRoute(builder: (context) => const SelectPerson())); }),
-           DrawerListTile(title:"Payment History", icon: Icons.history,onTap:(){ Navigator.push(
+          DrawerListTile(title:"Pending ITRs", icon: Icons.question_answer_outlined,onTap:(){ Navigator.push(
+              context, MaterialPageRoute(builder: (context) => const PendingItr())); }),
+          DrawerListTile(title:"Payment History", icon: Icons.history,onTap:(){ Navigator.push(
                context, MaterialPageRoute(builder: (context) => const PaymentHistoryScreen())); }),
           const SizedBox(height: 20),
           const DrawerListTile(title:"Dark Mode", icon: Icons.dark_mode_outlined,widgetName: "Switch",),
-          DrawerListTile(title:"Pending ITRs", icon: Icons.question_answer_outlined,onTap:(){ Navigator.push(
-              context, MaterialPageRoute(builder: (context) => const PendingItr())); }),
           const DrawerListTile(title:"Terms & Conditions", icon: Icons.privacy_tip_outlined),
           // const DrawerListTile(title:"FAQs", icon: Icons.question_answer_outlined),
           const DrawerListTile(title:"Rate Us", icon: Icons.star_border_outlined),

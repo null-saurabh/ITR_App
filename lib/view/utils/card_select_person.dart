@@ -27,6 +27,7 @@ class SelectPersonCard extends StatefulWidget {
 class _SelectPersonCardState extends State<SelectPersonCard> {
   int quarterTurns = 1;
   bool showExtensions = false;
+  // final scaffoldKey = GlobalKey<ScaffoldState>();
   // List<bool> paymentStatusList = [true, false, false];
 
   @override
@@ -54,26 +55,33 @@ class _SelectPersonCardState extends State<SelectPersonCard> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: Colors.primaries[
-                            Random().nextInt(Colors.primaries.length)],
-                        child: const Text("JS",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600)),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text(widget.name,
-                          style: TextStyle(
-                              color: selectPersonPageTitleColor(themeMode),
-                              fontSize: 17,
-                              fontWeight: FontWeight.w600)),
-                    ],
+                  Expanded(
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: Colors.primaries[
+                              Random().nextInt(Colors.primaries.length)],
+                          child: const Text("JS",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600)),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Text(
+                              widget.name,
+                              softWrap: false,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  color: selectPersonPageTitleColor(themeMode),
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600)),
+                        ),
+                      ],
+                    ),
                   ),
                   Row(
                     mainAxisSize: MainAxisSize.min,
@@ -203,7 +211,7 @@ class _SelectPersonCardState extends State<SelectPersonCard> {
                 child:Consumer<ApiProvider>(
                   builder: (ctx,apiProvider,_){
                     return FutureBuilder(
-                        future: apiProvider.getPaymentHistoryForPerson(widget.id),
+                        future: apiProvider.getOrdersForSinglePerson(widget.id),
                         builder: (context, snapshot){
                           if (snapshot.connectionState == ConnectionState.waiting) {
                             return const Center(child: CircularProgressIndicator(color: Colors.grey,));
@@ -211,16 +219,17 @@ class _SelectPersonCardState extends State<SelectPersonCard> {
                           else if (snapshot.hasError) {
                             return Center(child: Text('Error: ${snapshot.error}'));
                           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                            return const Center(child: Text('No Payment Data Available.'));
+                            return const Center(child: Text('No Order history available.'));
                           }
                           else{
-                            final paymentHistory = snapshot.data!;
+                            final orderHistory = snapshot.data!;
                           return Column(children: [
-                            ...List.generate(paymentHistory.length, (index) {
+                            ...List.generate(orderHistory.length, (index) {
                               return SelectPersonCardExtension(
-                                paymentStatus: paymentHistory[index].status == "Completed" ? true : false,
-                                transactionId: paymentHistory[index].transactionId,
-                                dateAndTime: DateTime.parse(paymentHistory[index].dateTime)
+                                order: orderHistory[index],
+                                // paymentStatus: orderHistory[index].status == "Completed" ? true : false,
+                                // transactionId: orderHistory[index].transactionId,
+                                // dateAndTime: DateTime.parse(orderHistory[index].dateTime)
                               );
                             })
                           ]);

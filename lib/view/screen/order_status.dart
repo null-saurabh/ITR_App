@@ -3,7 +3,6 @@ import 'package:itr_app/model/api_model.dart';
 import 'package:itr_app/model/theme.colors.dart';
 import 'package:itr_app/view/screen/homepage.dart';
 import 'package:itr_app/view/utils/bottom_navigation_button.dart';
-// import 'package:itr_app/view/utils/drawer.dart';
 import 'package:itr_app/view/utils/horizontal_line.dart';
 import 'package:itr_app/view/utils/order_status_info_card.dart';
 import 'package:itr_app/view/utils/wait_icon_for_order_status_page.dart';
@@ -76,7 +75,7 @@ class AssignExpertUi extends StatelessWidget {
           children: [
             Image.asset(successImage(themeMode),height: 24, width: 24,),
             const SizedBox(width: 10,),
-            const Text("Payment Successful",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),)
+            const Text("Payment Successful",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16),)
           ],
         ),
         const HorizontalLine(length: 30),
@@ -84,7 +83,7 @@ class AssignExpertUi extends StatelessWidget {
           children: [
             Image.asset(successImage(themeMode),height: 24, width: 24,),
             const SizedBox(width: 10,),
-            const Text("Assign Expert",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),)
+            const Text("Assign Expert",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16),)
           ],
         ),
         Row(
@@ -115,7 +114,7 @@ class AssignExpertUi extends StatelessWidget {
           children: [
             Image.asset("assets/images/wait.png",height: 24, width: 24,),
             const SizedBox(width: 10,),
-            const Text("Return Filing Pending",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16),)
+            const Text("Return Filing Pending",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),)
           ],
         ),
 
@@ -141,7 +140,7 @@ class PendingUi extends StatelessWidget {
           children: [
             Image.asset(successImage(themeMode),height: 24, width: 24,),
             const SizedBox(width: 10,),
-            const Text("Payment Successful",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),)
+            const Text("Payment Successful",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16),)
           ],
         ),
         const HorizontalLine(length: 30),
@@ -181,7 +180,7 @@ class PendingUi extends StatelessWidget {
           children: [
             Image.asset("assets/images/wait.png",height: 24, width: 24,),
             const SizedBox(width: 10,),
-            const Text("Return Filing Pending",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16),)
+            const Text("Return Filing Pending",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),)
           ],
         ),
 
@@ -209,7 +208,7 @@ class SuccessfulUi extends StatelessWidget {
           children: [
             Image.asset(successImage(themeMode),height: 24, width: 24,),
             const SizedBox(width: 10,),
-            const Text("Payment Successful",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),)
+            const Text("Payment Successful",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16),)
           ],
         ),
         const HorizontalLine(length: 30),
@@ -217,7 +216,7 @@ class SuccessfulUi extends StatelessWidget {
           children: [
             Image.asset(successImage(themeMode),height: 24, width: 24,),
             const SizedBox(width: 10,),
-            const Text("Expert Assigned",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),)
+            const Text("Expert Assigned",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16),)
           ],
         ),
         const HorizontalLine(length: 30,),

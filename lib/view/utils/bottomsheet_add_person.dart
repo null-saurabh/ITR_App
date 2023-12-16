@@ -30,160 +30,172 @@ void showAddPersonBottomSheet(BuildContext context,{bool editPerson = false,Stri
       isScrollControlled: true,
       builder: (BuildContext bc) {
         return Padding(
-          padding:
-              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-          child: SingleChildScrollView(
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary,
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(25),
-                      topRight: Radius.circular(25))),
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    left: 20.0, right: 20, top: 30, bottom: 30),
-                child: Form(
-                  key: formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      editPerson
-                      ?const Text(
-                        "Edit Person",
-                        style:
-                            TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                      )
-                      :const Text(
-                        "Add New Person",
-                        style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 20),
-                      Text(
-                        "Name",
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: bottomSheetTextColor(themeMode)),
-                      ),
-                      const SizedBox(height: 10),
-                      Material(
-                        elevation: 5,
-                        shadowColor: Colors.black,
-                        borderRadius: BorderRadius.circular(10),
-                        child: TextFormField(
-                          controller: nameController,
-                          decoration: InputDecoration(
-                            hintText: "Name",
-                            focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  const BorderSide(color: Color(0xff1B7FDB), width: 1),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: const Color(0xff1B7FDB).withOpacity(0.2),
-                                  width: 1),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: const Color(0xff1B7FDB).withOpacity(0.2),),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
+            padding:
+                EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: SingleChildScrollView(
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary,
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25))),
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: 20.0, right: 20, top: 30, bottom: 30),
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        editPerson
+                        ?const Text(
+                          "Edit Person",
+                          style:
+                              TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        )
+                        :const Text(
+                          "Add New Person",
+                          style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 20),
+                        Text(
+                          "Name",
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: bottomSheetTextColor(themeMode)),
+                        ),
+                        const SizedBox(height: 10),
+                        Material(
+                          elevation: 5,
+                          shadowColor: Colors.black,
+                          borderRadius: BorderRadius.circular(10),
+                          child: TextFormField(
+                            cursorColor: Colors.grey,
+                            controller: nameController,
+                            decoration: InputDecoration(
+                              hintText: "Name",
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    const BorderSide(color: Color(0xff1B7FDB), width: 1),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: const Color(0xff1B7FDB).withOpacity(0.2),
+                                    width: 1),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: const Color(0xff1B7FDB).withOpacity(0.2),),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
 
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Name cannot be empty';
+                              }
+                              return null;
+                            },
                           ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Name cannot be empty';
-                            }
-                            return null;
-                          },
                         ),
-                      ),
-                      const SizedBox(height: 20),
-                      Text(
-                        "Phone Number",
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: bottomSheetTextColor(themeMode)),
-                      ),
-                      const SizedBox(height: 10),
-                      Material(
-                        elevation: 5,
-                        shadowColor: Colors.black,
-                        borderRadius: BorderRadius.circular(10),
-                        child: TextFormField(
-                          controller: phoneNumberController,
-                          decoration: InputDecoration(
-                            hintText: "Enter your Phone Number",
-                            focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  const BorderSide(color: Color(0xff1B7FDB), width: 1),
-                              borderRadius: BorderRadius.circular(10),
+                        const SizedBox(height: 20),
+                        Text(
+                          "Phone Number",
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: bottomSheetTextColor(themeMode)),
+                        ),
+                        const SizedBox(height: 10),
+                        Material(
+                          elevation: 5,
+                          shadowColor: Colors.black,
+                          borderRadius: BorderRadius.circular(10),
+                          child: TextFormField(
+                            cursorColor: Colors.grey,
+                            controller: phoneNumberController,
+                            decoration: InputDecoration(
+                              hintText: "Enter your Phone Number",
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    const BorderSide(color: Color(0xff1B7FDB), width: 1),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: const Color(0xff1B7FDB).withOpacity(0.2),
+                                    width: 1),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: const Color(0xff1B7FDB).withOpacity(0.2)),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
                             ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: const Color(0xff1B7FDB).withOpacity(0.2),
-                                  width: 1),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: const Color(0xff1B7FDB).withOpacity(0.2)),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
+                            keyboardType: TextInputType.number,
+                               validator: validateMobile,
                           ),
-                          keyboardType: TextInputType.number,
-                             validator: validateMobile,
                         ),
-                      ),
-                      const SizedBox(height: 40),
-                      ElevatedButton(
-                          onPressed: () async {
-                            if(formKey.currentState!.validate()){
-                            final name = nameController.text;
-                            final phoneNumber = phoneNumberController.text;
-                            if (editPerson == false){
-                              try {
-                                await Provider.of<ApiProvider>(context, listen: false).addPerson(name, phoneNumber);
-                                Navigator.pop(context);
-                              } catch (error) {
-                                if (error.toString() == "Exception: Already added person with this phone number") {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(content: Text('Already added person with this phone number')),
-                                  );
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(content: Text('Failed to add person')),
-                                  );
+                        const SizedBox(height: 40),
+                        ElevatedButton(
+                            onPressed: () async {
+                              if(formKey.currentState!.validate()){
+                              final name = nameController.text;
+                              final phoneNumber = phoneNumberController.text;
+                              if (editPerson == false){
+                                try {
+                                  await Provider.of<ApiProvider>(context, listen: false).addPerson(name, phoneNumber);
+                                  Navigator.pop(context);
+                                } catch (error) {
+                                  if (error.toString() == "Exception: Already added person with this phone number") {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        behavior: SnackBarBehavior.floating,
+                                          margin: EdgeInsets.fromLTRB(0, 0, 0, 280),
+                                          content: Text('Already added person with this phone number')),
+                                    );
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          behavior: SnackBarBehavior.floating,
+                                          margin: EdgeInsets.fromLTRB(0, 0, 0, 280),
+                                          content: Text('Failed to add person')),
+                                    );
+                                  }
                                 }
                               }
-                            }
-                            else{
-                              try {
-                                await Provider.of<ApiProvider>(context,listen: false).updatePerson(personId!, name, phoneNumber);
-                                Navigator.pop(context);
+                              else{
+                                try {
+                                  await Provider.of<ApiProvider>(context,listen: false).updatePerson(personId!, name, phoneNumber);
+                                  Navigator.pop(context);
+                                }
+                                catch(error){
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        behavior: SnackBarBehavior.floating,
+                                        margin: EdgeInsets.fromLTRB(0, 0, 0, 280),
+                                        content: Text('Failed to edit person')),
+                                  );
+                                  rethrow;
+                                }
                               }
-                              catch(error){
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Failed to edit person')),
-                                );
-                                rethrow;
-                              }
-                            }
-                          }},
-                          child: const AppGradiantButton(
-                            text: "Submit",
-                          )),
-                    ],
+                            }},
+                            child: const AppGradiantButton(
+                              text: "Submit",
+                            )),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        );
+          );
+
       });
 }

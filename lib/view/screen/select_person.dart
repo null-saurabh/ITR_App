@@ -22,7 +22,7 @@ class SelectPerson extends StatelessWidget {
       bottomNavigationBar: BottomNavigationButton(
         text: "Add New Person",
         icon: Icons.add_circle_outline,
-        elevation: true,
+        elevation: false,
         onTap: () => showAddPersonBottomSheet(context),
       ),
       body: Consumer<ApiProvider>(

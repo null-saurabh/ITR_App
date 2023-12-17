@@ -154,17 +154,21 @@ void showAddPersonBottomSheet(BuildContext context,{bool editPerson = false,Stri
                                   Navigator.pop(context);
                                 } catch (error) {
                                   if (error.toString() == "Exception: Already added person with this phone number") {
+                                    Navigator.pop(context);
+
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
                                         behavior: SnackBarBehavior.floating,
-                                          margin: EdgeInsets.fromLTRB(0, 0, 0, 280),
+                                          // margin: EdgeInsets.fromLTRB(0, 0, 0, 280),
                                           content: Text('Already added person with this phone number')),
                                     );
                                   } else {
+                                    Navigator.pop(context);
+
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
                                           behavior: SnackBarBehavior.floating,
-                                          margin: EdgeInsets.fromLTRB(0, 0, 0, 280),
+                                          // margin: EdgeInsets.fromLTRB(0, 0, 0, 280),
                                           content: Text('Failed to add person')),
                                     );
                                   }
@@ -176,10 +180,12 @@ void showAddPersonBottomSheet(BuildContext context,{bool editPerson = false,Stri
                                   Navigator.pop(context);
                                 }
                                 catch(error){
+                                  Navigator.pop(context);
+
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                         behavior: SnackBarBehavior.floating,
-                                        margin: EdgeInsets.fromLTRB(0, 0, 0, 280),
+                                        // margin: EdgeInsets.fromLTRB(0, 0, 0, 280),
                                         content: Text('Failed to edit person')),
                                   );
                                   rethrow;

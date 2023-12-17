@@ -118,16 +118,17 @@ class _HomePageState extends State<HomePage> {
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
+                                color: Colors.white,
                               ),
                             ),
-                            Icon(Icons.arrow_forward_rounded),
+                            Icon(Icons.arrow_forward_rounded,color: Colors.white,),
                           ],
                         ),
                       );
                     }
                     else {
                       // Return an empty container if no orders are present
-                      return  SizedBox(width: 1,);
+                      return  const SizedBox(width: 1,);
                     }
                   },
                 ),

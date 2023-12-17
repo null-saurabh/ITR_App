@@ -3,6 +3,7 @@ import 'package:itr_app/view/screen/login_page.dart';
 import 'package:itr_app/view/screen/payment_history.dart';
 import 'package:itr_app/view/screen/pending_itr.dart';
 import 'package:itr_app/view/screen/select_person.dart';
+import 'package:itr_app/view/screen/term_and_condition_page.dart';
 import 'package:itr_app/view_model/provider/api_provider.dart';
 import 'package:itr_app/view_model/provider/theme_changer_provider.dart';
 import 'package:provider/provider.dart';
@@ -62,16 +63,39 @@ class DrawerUi extends StatelessWidget {
           ),
           DrawerListTile(title:"Tax Payers", icon: Icons.groups_outlined,onTap:(){ Navigator.push(
               context, MaterialPageRoute(builder: (context) => const SelectPerson())); }),
-          DrawerListTile(title:"Pending ITRs", icon: Icons.question_answer_outlined,onTap:(){ Navigator.push(
+          DrawerListTile(title:"Pending ITRs", icon: Icons.question_answer_outlined,onTap:(){
+            Navigator.push(
               context, MaterialPageRoute(builder: (context) => const PendingItr())); }),
           DrawerListTile(title:"Payment History", icon: Icons.history,onTap:(){ Navigator.push(
                context, MaterialPageRoute(builder: (context) => const PaymentHistoryScreen())); }),
-          const SizedBox(height: 20),
+          // const SizedBox(height: 20),
+          const SizedBox(height: 5,),
+          const Divider(thickness: 2.5,
+            // color: Color(0xFF1B7FDB).withOpacity(0.2),
+          ),
+          const SizedBox(height: 5,),
+
           const DrawerListTile(title:"Dark Mode", icon: Icons.dark_mode_outlined,widgetName: "Switch",),
-          const DrawerListTile(title:"Terms & Conditions", icon: Icons.privacy_tip_outlined),
+          // const SizedBox(height: 20),
+          const SizedBox(height: 5,),
+
+          const Divider(thickness: 2.5,
+            // color: Color(0xFF1B7FDB).withOpacity(0.2),
+          ),
+          const SizedBox(height: 5,),
+
+          DrawerListTile(title:"Terms & Conditions", icon: Icons.privacy_tip_outlined,onTap:(){
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => const TermsAndConditionsPage())); }),
           // const DrawerListTile(title:"FAQs", icon: Icons.question_answer_outlined),
           const DrawerListTile(title:"Rate Us", icon: Icons.star_border_outlined),
-          const SizedBox(height: 20),
+          const SizedBox(height: 5,),
+           const Divider(thickness: 2.5,
+             // color: Color(0xFF1B7FDB).withOpacity(0.2),
+           ),
+          const SizedBox(height: 5,),
+
+          // const SizedBox(height: 20),
           DrawerListTile(title:"Logout", icon: Icons.logout,color: Colors.red,onTap:()=> _handleLogout(context)),
 
         ],
@@ -108,7 +132,7 @@ class DrawerListTile extends StatelessWidget {
       leading: Icon(icon,color: color,),
       title: Text(title,style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w600),),
       trailing: widgetName == "Arrow"
-      ? const Icon(Icons.arrow_forward_ios,)
+      ? Icon(Icons.arrow_forward_ios,color: Provider.of<ThemeChanger>(context).themeMode == ThemeMode.dark ? Colors.white : null)
       : Consumer<ThemeChanger>(builder: (context, theme, _) {
         return Switch(
           value: theme.themeMode == ThemeMode.dark,

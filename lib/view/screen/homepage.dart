@@ -21,8 +21,7 @@ class _HomePageState extends State<HomePage> {
     final themeMode = Theme.of(context).brightness == Brightness.dark
         ? ThemeMode.dark
         : ThemeMode.light;
-    print('home');
-    // Provider.of<ApiProvider>(context, listen: false).updateOrdersForDashboard();
+    Provider.of<ApiProvider>(context, listen: false).updateOrdersForDashboard();
     return Scaffold(
       floatingActionButton: const CustomFAB(),
       drawer: const DrawerUi(),

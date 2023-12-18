@@ -48,7 +48,7 @@ class TermsAndConditionsPage extends StatelessWidget {
                 ),
               ),
               Text(
-                'Your use of the App is also governed by our Privacy Policy, which can be found at [link to your Privacy Policy]. Please review the Privacy Policy to understand how we collect, use, and disclose information.',
+                'Your use of the App is also governed by our Privacy Policy, which can be found at Privacy Policy Page. Please review the Privacy Policy to understand how we collect, use, and disclose information.',
               ),
               SizedBox(height: 16),
               Text(

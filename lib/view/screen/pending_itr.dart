@@ -32,7 +32,7 @@ class PendingItr extends StatelessWidget {
                   } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                     // print("c");
 
-                    return const Text("No ITR filed");
+                    return const Center(child: Text("There are no Pending ITRs",style: TextStyle(fontSize: 18),));
                   }
                   else{
                     // print("d");

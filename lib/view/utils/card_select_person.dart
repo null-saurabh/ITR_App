@@ -252,7 +252,7 @@ class _SelectPersonCardState extends State<SelectPersonCard> {
                     // mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("ITR History",style: TextStyle(fontSize: 18,color: blackAndWhiteColor(themeMode))),
+                      Text("ITR History",style: TextStyle(fontSize: 16,color: blackAndWhiteColor(themeMode))),
                       const SizedBox(width: 2.5,),
                       RotatedBox(
                           quarterTurns: quarterTurns,

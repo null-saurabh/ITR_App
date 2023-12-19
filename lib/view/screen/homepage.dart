@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:itr_app/model/theme.colors.dart';
+import 'package:itr_app/view/screen/how_it_works.dart';
 import 'package:itr_app/view/screen/pending_itr.dart';
 import 'package:itr_app/view/screen/select_person.dart';
 import 'package:itr_app/view/utils/drawer.dart';
@@ -15,7 +16,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   @override
   Widget build(BuildContext context) {
     final themeMode = Theme.of(context).brightness == Brightness.dark
@@ -120,14 +120,18 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.white,
                               ),
                             ),
-                            Icon(Icons.arrow_forward_rounded,color: Colors.white,),
+                            Icon(
+                              Icons.arrow_forward_rounded,
+                              color: Colors.white,
+                            ),
                           ],
                         ),
                       );
-                    }
-                    else {
+                    } else {
                       // Return an empty container if no orders are present
-                      return  const SizedBox(width: 1,);
+                      return const SizedBox(
+                        width: 1,
+                      );
                     }
                   },
                 ),
@@ -218,10 +222,21 @@ class HomePageListTile extends StatelessWidget {
         child: Center(
           child: ListTile(
             onTap: () {
-              Navigator.push(
+              if (title == "How It Works") {
+                Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const SelectPerson()));
+                    builder: (context) => const HowItWorks(),
+                  ),
+                );
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SelectPerson(),
+                  ),
+                );
+              }
             },
             title: Text(
               title,

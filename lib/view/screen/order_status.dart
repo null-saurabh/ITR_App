@@ -44,8 +44,8 @@ class OrderStatus extends StatelessWidget {
                     :order.orderStatus == "assignExpert"
                 ? AssignExpertUi(expertName: order.expert!.name)
                     : order.seen == true
-                  ?SuccessfulUi()
-                    :PendingUi()
+                  ?const SuccessfulUi()
+                    :const PendingUi()
               ),
             )
           ],
@@ -102,7 +102,7 @@ class AssignExpertUi extends StatelessWidget {
                     color: const Color(0xff3291E9).withOpacity(0.12)
                   ),
                   child: Center(child: Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Text("Your Tax Expert is $expertName, he/she will contact you within 24 hours."),
                   )),
                 ),

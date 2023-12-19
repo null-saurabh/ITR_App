@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:itr_app/model/api_model.dart';
 import 'package:itr_app/model/theme.colors.dart';
 import 'package:itr_app/view/screen/order_status.dart';
 import 'package:itr_app/view/utils/bottom_navigation_button.dart';
@@ -43,7 +44,8 @@ class _UploadDocumentState extends State<UploadDocument> {
 
   Future<void> placeOrder(String personId) async {
     try {
-      final orderResponse = await Provider.of<ApiProvider>(context, listen: false)
+      final apiProvider = Provider.of<ApiProvider>(context, listen: false);
+      final orderResponse = await apiProvider
           .createOrder(personId);
 
       final orderId = orderResponse.id;
@@ -51,15 +53,17 @@ class _UploadDocumentState extends State<UploadDocument> {
       final razorpayKey = orderResponse.razorpayKeyId; // Replace with your Razorpay key
       final customerName = widget.name; // Replace with customer's name
       final customerNumber = widget.number; // Replace with customer's number
-      Navigator.pop(context);
-
 
       Provider.of<RazorPayProvider>(context, listen: false)
-        ..onSuccess = () {
-          // Navigator.push(context, MaterialPageRoute(builder: (context) => const OrderStatus()));
+        ..onSuccess = () async {
+          final List<OrderForDashboard> allOrders = await apiProvider.getAllOrders();
+          final OrderForDashboard lastOrder = allOrders.first;
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OrderStatus(order: lastOrder)));
         }
-        ..onError = () {
-          // Navigator.push(context, MaterialPageRoute(builder: (context) => const OrderStatus(paymentStatus: false)));
+        ..onError = () async{
+          final List<OrderForDashboard> allOrders = await apiProvider.getAllOrders();
+          final OrderForDashboard lastOrder = allOrders.first;
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OrderStatus(order: lastOrder)));
         }
         ..openCheckout(
         amount: orderAmount,

@@ -6,6 +6,11 @@ LinearGradient blueGradient = const LinearGradient(
   colors: [Color(0xFF3291E9), Color(0xFF5AB0FF)],
 );
 
+
+Color blackAndWhiteColor(ThemeMode mode) {
+  return mode == ThemeMode.dark ? Colors.white : Colors.black;
+}
+
 Color homePageContainerColor(ThemeMode mode) {
   return mode == ThemeMode.dark ? const Color(0xFF313B42) : Colors.white;
 }

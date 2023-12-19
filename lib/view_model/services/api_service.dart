@@ -291,6 +291,21 @@ class AuthService {
     }
   }
 
+  Future<OrderForDashboardResponse> fetchAllOrders(String token) async {
+    final response = await http.get(
+      Uri.parse(
+          "http://ec2-3-7-45-69.ap-south-1.compute.amazonaws.com:4000/api/user/order/"),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token,
+      },
+    );
 
+    if (response.statusCode == 200) {
+      return OrderForDashboardResponse.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to fetch orders for dashboard');
+    }
+  }
 
 }

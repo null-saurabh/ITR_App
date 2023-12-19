@@ -211,6 +211,24 @@ class ApiProvider with ChangeNotifier {
     }
   }
 
+  Future<List<OrderForDashboard>> getAllOrders() async {
+    try {
+      final response = await _authService.fetchAllOrders(_token!);
+      if(response.success){
+        return response.data;
+      }
+      else {
+        _errorMessage = 'Failed to fetch data';
+        notifyListeners();
+        throw Exception('Failed to fetch data');
+      }
+    } catch (error) {
+      _errorMessage = 'Failed to fetch data';
+      notifyListeners();
+      rethrow;
+    }
+  }
+
   Future<List<OrderForDashboard>> getOrdersForDashboard() async {
     try {
       final response = await _authService.fetchOrdersForDashboard(_token!);

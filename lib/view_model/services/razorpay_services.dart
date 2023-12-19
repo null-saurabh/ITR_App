@@ -35,7 +35,7 @@ class RazorpayService {
       'amount': amount,
       'currency' : "INR",
       'name': "ITR APP",
-      'timeout': 20,
+      'timeout': 120,
       'order_id': orderId,
       'description':'ITR Fee',
       'retry': {'enabled': true, 'max_count': 1},

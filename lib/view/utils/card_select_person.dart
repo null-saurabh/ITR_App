@@ -61,8 +61,8 @@ class _SelectPersonCardState extends State<SelectPersonCard> {
                         CircleAvatar(
                           backgroundColor: Colors.primaries[
                               Random().nextInt(Colors.primaries.length)],
-                          child: const Text("JS",
-                              style: TextStyle(
+                          child: Text(getInitials(widget.name).toUpperCase(),
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600)),
@@ -87,34 +87,35 @@ class _SelectPersonCardState extends State<SelectPersonCard> {
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      UploadDocument(personId: widget.id,name: widget.name, number: widget.phoneNumber)));
-                        },
-                        child: Container(
-                          width: 108,
-                          height: 36,
-                          decoration: BoxDecoration(
-                              border:
-                                  Border.all(color: const Color(0xff3291E9)),
-                              borderRadius: BorderRadius.circular(4),
-                              color: const Color(0xff3291E9).withOpacity(0.12)),
-                          child: const Center(
-                              child: Text(
-                            "Start Filling",
-                            style: TextStyle(
-                                color: Color(0xff5AB0FF),
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14),
-                          )),
-                        ),
-                      ),
+                      // GestureDetector(
+                      //   onTap: () {
+                      //     Navigator.push(
+                      //         context,
+                      //         MaterialPageRoute(
+                      //             builder: (context) =>
+                      //                 UploadDocument(personId: widget.id,name: widget.name, number: widget.phoneNumber)));
+                      //   },
+                      //   child: Container(
+                      //     width: 108,
+                      //     height: 36,
+                      //     decoration: BoxDecoration(
+                      //         border:
+                      //             Border.all(color: const Color(0xff3291E9)),
+                      //         borderRadius: BorderRadius.circular(4),
+                      //         color: const Color(0xff3291E9).withOpacity(0.12)),
+                      //     child: const Center(
+                      //         child: Text(
+                      //       "Start Filling",
+                      //       style: TextStyle(
+                      //           color: Color(0xff5AB0FF),
+                      //           fontWeight: FontWeight.w500,
+                      //           fontSize: 14),
+                      //     )),
+                      //   ),
+                      // ),
                       PopupMenuButton<String>(
                         icon: const Icon(Icons.more_vert),
+                        color: blackAndWhiteColor(themeMode),
                         onSelected: (String result) async{
                           if (result == 'Edit') {
                             showAddPersonBottomSheet(widget.contextMain,editPerson: true,initialName: widget.name,initialNumber: widget.phoneNumber,personId: widget.id);
@@ -159,7 +160,6 @@ class _SelectPersonCardState extends State<SelectPersonCard> {
                           color: selectPersonPageTitleColor(themeMode))),
                 ],
               ),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -177,7 +177,8 @@ class _SelectPersonCardState extends State<SelectPersonCard> {
                               color: selectPersonPageTitleColor(themeMode))),
                     ],
                   ),
-                  Row(children: [
+                  // Row(
+                  //     children: [
                     // IconButton(
                     //     onPressed: () async {
                     //       try {
@@ -191,19 +192,62 @@ class _SelectPersonCardState extends State<SelectPersonCard> {
                     //       }
                     //     },
                     //     icon: const Icon(Icons.delete_forever)),
-                    RotatedBox(
-                        quarterTurns: quarterTurns,
-                        child: GestureDetector(
-                          child: const Icon(Icons.navigate_next, size: 26),
-                          onTap: () {
-                            setState(() {
-                              quarterTurns = (quarterTurns == 1) ? 3 : 1;
-                              showExtensions = !showExtensions;
-                            });
-                          },
-                        )),
-                    const SizedBox(width: 10,)
-                  ]),
+                    // RotatedBox(
+                    //     quarterTurns: quarterTurns,
+                    //     child: GestureDetector(
+                    //       child: const Icon(Icons.navigate_next, size: 26),
+                    //       onTap: () {
+                    //         setState(() {
+                    //           quarterTurns = (quarterTurns == 1) ? 3 : 1;
+                    //           showExtensions = !showExtensions;
+                    //         });
+                    //       },
+                    //     )),
+                    // const SizedBox(width: 10,)
+                  // ]),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  RotatedBox(
+                      quarterTurns: quarterTurns,
+                      child: GestureDetector(
+                        child: Icon(Icons.navigate_next, size: 26,color: blackAndWhiteColor(themeMode),),
+                        onTap: () {
+                          setState(() {
+                            quarterTurns = (quarterTurns == 1) ? 3 : 1;
+                            showExtensions = !showExtensions;
+                          });
+                        },
+                      )),
+                  const SizedBox(width: 10,),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  UploadDocument(personId: widget.id,name: widget.name, number: widget.phoneNumber)));
+                    },
+                    child: Container(
+                      width: 108,
+                      height: 36,
+                      decoration: BoxDecoration(
+                          border:
+                          Border.all(color: const Color(0xff3291E9)),
+                          borderRadius: BorderRadius.circular(4),
+                          color: const Color(0xff3291E9).withOpacity(0.12)),
+                      child: const Center(
+                          child: Text(
+                            "Start Filling",
+                            style: TextStyle(
+                                color: Color(0xff5AB0FF),
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14),
+                          )),
+                    ),
+                  ),
                 ],
               ),
               Visibility(
@@ -219,11 +263,17 @@ class _SelectPersonCardState extends State<SelectPersonCard> {
                           else if (snapshot.hasError) {
                             return Center(child: Text('Error: ${snapshot.error}'));
                           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                            return const Center(child: Text('No Order history available.'));
+                            return const Column(
+                              children: [
+                                SizedBox(height: 10),
+                                Center(child: Text('No ITR history available.')),
+                              ],
+                            );
                           }
                           else{
                             final orderHistory = snapshot.data!;
                           return Column(children: [
+                            const SizedBox(height: 10),
                             ...List.generate(orderHistory.length, (index) {
                               return SelectPersonCardExtension(
                                 order: orderHistory[index],
@@ -245,4 +295,16 @@ class _SelectPersonCardState extends State<SelectPersonCard> {
       ),
     );
   }
+
+
+  String getInitials(String name) {
+    if (name.isEmpty) {
+      return '';
+    }
+
+    final initials = name.split(' ').map((word) => word.isNotEmpty ? word[0] : '').toList();
+    return initials.take(2).join();
+  }
+
+
 }

@@ -135,6 +135,7 @@ class DrawerListTile extends StatelessWidget {
       ? Icon(Icons.arrow_forward_ios,color: Provider.of<ThemeChanger>(context).themeMode == ThemeMode.dark ? Colors.white : null)
       : Consumer<ThemeChanger>(builder: (context, theme, _) {
         return Switch(
+          activeColor: Colors.white,
           value: theme.themeMode == ThemeMode.dark,
           onChanged: (newValue) {
             theme.toggleTheme(newValue);

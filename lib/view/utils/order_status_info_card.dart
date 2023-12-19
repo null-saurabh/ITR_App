@@ -43,7 +43,7 @@ class OrderStatusInfoCard extends StatelessWidget {
                           children: [
                             CircleAvatar(
                               backgroundColor: Colors.white,
-                              child: Text(initials,
+                              child: Text(initials.toUpperCase(),
                                   style: const TextStyle(
                                       color: Color(0xff1B7FDB),
                                       fontSize: 16,

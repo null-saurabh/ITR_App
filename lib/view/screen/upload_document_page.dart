@@ -58,7 +58,9 @@ class _UploadDocumentState extends State<UploadDocument> {
         ..onSuccess = () async {
           final List<OrderForDashboard> allOrders = await apiProvider.getAllOrders();
           final OrderForDashboard lastOrder = allOrders.first;
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OrderStatus(order: lastOrder)));
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => OrderStatus(order: lastOrder)),
+                (route) => false,
+          );
         }
         ..onError = () async{
           final List<OrderForDashboard> allOrders = await apiProvider.getAllOrders();

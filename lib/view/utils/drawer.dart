@@ -61,7 +61,7 @@ class DrawerUi extends StatelessWidget {
               ),
             ),
           ),
-          DrawerListTile(title:"Tax Payers", icon: Icons.groups_outlined,onTap:(){ Navigator.push(
+          DrawerListTile(title:"Persons", icon: Icons.groups_outlined,onTap:(){ Navigator.push(
               context, MaterialPageRoute(builder: (context) => const SelectPerson())); }),
           DrawerListTile(title:"Pending ITRs", icon: Icons.question_answer_outlined,onTap:(){
             Navigator.push(

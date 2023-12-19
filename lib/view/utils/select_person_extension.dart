@@ -110,8 +110,8 @@ class SelectPersonCardExtension extends StatelessWidget {
                               order.orderStatus == "ITR_Filed"
                                   ?const Text("Completed",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,color: Color(0xff39AD3E)))
                                   : order.orderStatus == "assignExpert"
-                              ?const Text("Expert Assigned",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,color: Color(0xff39AD3E)))
-                              :const Text("Pending",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,color: Color(0xff39AD3E)))
+                              ?const Text("Expert Assigned",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.orange))
+                              :const Text("Pending",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.orange))
 
                             // ]
 

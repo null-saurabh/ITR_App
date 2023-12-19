@@ -17,8 +17,9 @@ class SelectPerson extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.secondary,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.tertiary,
-        title: const Text("Select Tax Payer"),
+        title: const Text("Select Person"),
       ),
+
       bottomNavigationBar: BottomNavigationButton(
         text: "Add New Person",
         icon: Icons.add_circle_outline,

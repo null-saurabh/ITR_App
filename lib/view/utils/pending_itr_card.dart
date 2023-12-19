@@ -88,10 +88,10 @@ class PendingItrCard extends StatelessWidget {
                               order.orderStatus == "ITR_Filed"
                             ? const Text("Successful",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,color: Color(0xff39AD3E)))
                               :order.orderStatus == "assignExpert"
-                                  ?const Text("Expert Assigned",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,color: Color(0xff39AD3E)))
+                                  ?const Text("Expert Assigned",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.orange))
                                   : order.orderStatus == "paymentPending"
                               ? const Text("Payment Failed",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.red))
-                                  : const Text("Pending",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,color: Color(0xff39AD3E)))
+                                  : const Text("Pending",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.orange))
 
                           ],
                         ),

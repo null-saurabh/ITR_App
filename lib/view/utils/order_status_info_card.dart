@@ -153,7 +153,9 @@ class OrderStatusInfoCard extends StatelessWidget {
                           ?const Text("ITR In Progress",style: TextStyle(color: Colors.white,fontSize: 16, fontWeight: FontWeight.w600),)
                                   : order.orderStatus == "paymentPending"
                             ?const Text("ITR Payment Failed",style: TextStyle(color: Colors.white,fontSize: 16, fontWeight: FontWeight.w600),)
-                                  :const Text("ITR In Progress",style: TextStyle(color: Colors.white,fontSize: 16, fontWeight: FontWeight.w600),)
+                                  : order.orderStatus == "ITR_Filed"
+                              ?const Text("ITR Filing Completed",style: TextStyle(color: Colors.lightGreenAccent,fontSize: 16, fontWeight: FontWeight.w600),)
+                              :const Text("ITR In Progress",style: TextStyle(color: Colors.white,fontSize: 16, fontWeight: FontWeight.w600),)
                           ),
                         )
                       ],

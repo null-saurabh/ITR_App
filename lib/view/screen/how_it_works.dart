@@ -29,40 +29,6 @@ class HowItWorks extends StatelessWidget {
                 children: [
                   CircleAvatar(radius: 12, child: Text("1"),),
                   SizedBox(width: 10,),
-                  Text("Login", style: TextStyle(
-                      fontWeight: FontWeight.w600, fontSize: 16),)
-                ],
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const HorizontalLine(length: 100,),
-                  const SizedBox(width: 10,),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Container(
-                        height: 60,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6),
-                            border: Border.all(color: const Color(0xff3291E9)
-                                .withOpacity(0.6)),
-                            color: const Color(0xff3291E9).withOpacity(0.12)
-                        ),
-                        child: const Center(child: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                              "Create an account or log in with your phone number to get started."),
-                        )),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              const Row(
-                children: [
-                  CircleAvatar(radius: 12, child: Text("2"),),
-                  SizedBox(width: 10,),
                   Text("Upload Documents", style: TextStyle(
                       fontWeight: FontWeight.w600, fontSize: 16),)
                 ],
@@ -95,7 +61,7 @@ class HowItWorks extends StatelessWidget {
               ),
               const Row(
                 children: [
-                  CircleAvatar(radius: 12, child: Text("3"),),
+                  CircleAvatar(radius: 12, child: Text("2"),),
                   SizedBox(width: 10,),
                   Text("Make Payment", style: TextStyle(
                       fontWeight: FontWeight.w600, fontSize: 16),)
@@ -129,7 +95,7 @@ class HowItWorks extends StatelessWidget {
               ),
               const Row(
                 children: [
-                  CircleAvatar(radius: 12, child: Text("4"),),
+                  CircleAvatar(radius: 12, child: Text("3"),),
                   SizedBox(width: 10,),
                   Text("ITR Filing", style: TextStyle(
                       fontWeight: FontWeight.w600, fontSize: 16),)
@@ -163,7 +129,7 @@ class HowItWorks extends StatelessWidget {
               ),
               const Row(
                 children: [
-                  CircleAvatar(radius: 12, child: Text("5"),),
+                  CircleAvatar(radius: 12, child: Text("4"),),
                   SizedBox(width: 10,),
                   Text("E Verification", style: TextStyle(
                       fontWeight: FontWeight.w600, fontSize: 16),)

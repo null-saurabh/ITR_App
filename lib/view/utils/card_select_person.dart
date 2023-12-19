@@ -210,18 +210,6 @@ class _SelectPersonCardState extends State<SelectPersonCard> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  RotatedBox(
-                      quarterTurns: quarterTurns,
-                      child: GestureDetector(
-                        child: Icon(Icons.navigate_next, size: 26,color: blackAndWhiteColor(themeMode),),
-                        onTap: () {
-                          setState(() {
-                            quarterTurns = (quarterTurns == 1) ? 3 : 1;
-                            showExtensions = !showExtensions;
-                          });
-                        },
-                      )),
-                  const SizedBox(width: 10,),
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -248,6 +236,42 @@ class _SelectPersonCardState extends State<SelectPersonCard> {
                           )),
                     ),
                   ),
+                ],
+              ),
+              // const SizedBox(height: 10,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  TextButton(onPressed: (){
+                    setState(() {
+                      quarterTurns = (quarterTurns == 1) ? 3 : 1;
+                      showExtensions = !showExtensions;
+                    });
+                  }, child: Row(
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("ITR History",style: TextStyle(fontSize: 18,color: blackAndWhiteColor(themeMode))),
+                      const SizedBox(width: 2.5,),
+                      RotatedBox(
+                          quarterTurns: quarterTurns,
+                          child: Icon(Icons.navigate_next, size: 24,color: blackAndWhiteColor(themeMode),),
+
+                          ),
+                    ],
+                  ),),
+                  // RotatedBox(
+                  //     quarterTurns: quarterTurns,
+                  //     child: GestureDetector(
+                  //       child: Icon(Icons.navigate_next, size: 24,color: blackAndWhiteColor(themeMode),),
+                  //       onTap: () {
+                  //         setState(() {
+                  //           quarterTurns = (quarterTurns == 1) ? 3 : 1;
+                  //           showExtensions = !showExtensions;
+                  //         });
+                  //       },
+                  //     )),
                 ],
               ),
               Visibility(

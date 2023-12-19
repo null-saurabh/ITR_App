@@ -43,7 +43,7 @@ class OrderStatus extends StatelessWidget {
                   ? const PaymentFailUi()
                     :order.orderStatus == "assignExpert"
                 ? AssignExpertUi(expertName: order.expert!.name)
-                    : order.seen == true
+                    : order.orderStatus == "ITR_Filed"
                   ?const SuccessfulUi()
                     :const PendingUi()
               ),

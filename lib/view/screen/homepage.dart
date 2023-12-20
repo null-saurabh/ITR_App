@@ -130,12 +130,15 @@ class _HomePageState extends State<HomePage> {
                               return HomePageListTile(
                                 title: "Pending ITRs",
                                 image: "assets/images/startFillingImage.png",
-                                icon: Icon(Icons.navigate_next,color: greyAndWhiteColor(themeMode),),
-                                price: apiProvider.ordersForDashboard!.length.toString(),
+                                icon: Icon(
+                                  Icons.navigate_next,
+                                  color: greyAndWhiteColor(themeMode),
+                                ),
+                                price: apiProvider.ordersForDashboard!.length
+                                    .toString(),
                                 navigateToPage: const PendingItr(),
                               );
-                            }
-                            else{
+                            } else {
                               return const SizedBox();
                             }
                           },
@@ -144,7 +147,10 @@ class _HomePageState extends State<HomePage> {
                         HomePageListTile(
                           title: "Start Income Tax\nFilling",
                           image: "assets/images/startFillingImage.png",
-                          icon: Icon(Icons.navigate_next,color: greyAndWhiteColor(themeMode),),
+                          icon: Icon(
+                            Icons.navigate_next,
+                            color: greyAndWhiteColor(themeMode),
+                          ),
                           price: "₹599",
                           navigateToPage: const SelectPerson(),
                         ),
@@ -152,12 +158,12 @@ class _HomePageState extends State<HomePage> {
                           height: 20,
                         ),
                         HomePageListTile(
-                            title: "How It Works",
-                            image: "assets/images/questionMark.png",
-                            icon: Icon(Icons.navigate_next,color: greyAndWhiteColor(themeMode)),
+                          title: "How It Works",
+                          image: "assets/images/questionMark.png",
+                          icon: Icon(Icons.navigate_next,
+                              color: greyAndWhiteColor(themeMode)),
                           navigateToPage: const HowItWorks(),
                         ),
-
                       ],
                     )),
               ],
@@ -170,14 +176,13 @@ class _HomePageState extends State<HomePage> {
 }
 
 class HomePageListTile extends StatelessWidget {
-  const HomePageListTile({
-    super.key,
-    required this.title,
-    required this.image,
-    required this.icon,
-    this.price,
-    required this.navigateToPage
-  });
+  const HomePageListTile(
+      {super.key,
+      required this.title,
+      required this.image,
+      required this.icon,
+      this.price,
+      required this.navigateToPage});
 
   final String title;
   final String image;
@@ -193,7 +198,7 @@ class HomePageListTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 25.0, right: 25),
       child: Container(
-        height: title == "Pending ITRs" ? 60:90,
+        height: title == "Pending ITRs" ? 60 : 90,
         decoration: BoxDecoration(
             color: homePageContainerColor(themeMode),
             borderRadius: BorderRadius.circular(8),
@@ -207,18 +212,24 @@ class HomePageListTile extends StatelessWidget {
         child: Center(
           child: ListTile(
             onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => navigateToPage,
-                  ),
-                );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => navigateToPage,
+                ),
+              );
             },
             title: Text(
               title,
               style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
             ),
-            leading:title == "Pending ITRs"?Icon(Icons.watch_later,color: Color(0xFF5AB0FF),size: 28,): Image.asset(image),
+            leading: title == "Pending ITRs"
+                ? const Icon(
+                    Icons.watch_later,
+                    color: Color(0xFF5AB0FF),
+                    size: 28,
+                  )
+                : Image.asset(image),
             trailing: price != null
                 ? Row(
                     mainAxisSize: MainAxisSize.min,
@@ -244,13 +255,13 @@ class HomePageListTile extends StatelessWidget {
                           ),
                         )
                       else
-                      Text(
-                        price!,
-                        style: const TextStyle(
-                            color: Colors.blue,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16),
-                      ),
+                        Text(
+                          price!,
+                          style: const TextStyle(
+                              color: Colors.blue,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16),
+                        ),
                       icon,
                     ],
                   )
@@ -261,8 +272,6 @@ class HomePageListTile extends StatelessWidget {
     );
   }
 }
-
-
 
 // onPressed: () {
 // Navigator.push(

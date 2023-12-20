@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:itr_app/model/theme.colors.dart';
 import 'package:itr_app/view/screen/homepage.dart';
 import 'package:itr_app/view/screen/login_page.dart';
 import 'package:itr_app/view_model/provider/api_provider.dart';
@@ -59,8 +60,10 @@ class VideoState extends State<Splash> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = Theme.of(context).brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.secondary,
+      // backgroundColor: Colors.white,
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
@@ -71,7 +74,7 @@ class VideoState extends State<Splash> with SingleTickerProviderStateMixin {
                 animation: animation,
                 builder: (BuildContext context, Widget? child) {
                   return Image.asset(
-                    'assets/images/loginimage.png',
+                    loginPageImage(themeMode),
                     width: animation.value * 250,
                     height: animation.value * 250,
                   );

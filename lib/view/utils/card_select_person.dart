@@ -114,8 +114,10 @@ class _SelectPersonCardState extends State<SelectPersonCard> {
                       //   ),
                       // ),
                       PopupMenuButton<String>(
-                        icon: const Icon(Icons.more_vert),
-                        color: blackAndWhiteColor(themeMode),
+                        icon:  Icon(Icons.more_vert,color:blackAndWhiteColor(themeMode),),
+                        // color: blackAndWhiteColor(themeMode),
+                        // shadowColor: Colors.white,
+                        surfaceTintColor: Colors.white,
                         onSelected: (String result) async{
                           if (result == 'Edit') {
                             showAddPersonBottomSheet(widget.contextMain,editPerson: true,initialName: widget.name,initialNumber: widget.phoneNumber,personId: widget.id);
@@ -250,9 +252,9 @@ class _SelectPersonCardState extends State<SelectPersonCard> {
                     });
                   }, child: Row(
                     // mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text("ITR History",style: TextStyle(fontSize: 16,color: blackAndWhiteColor(themeMode))),
+                      Text("ITR History",style: TextStyle(fontSize: 14,color: blackAndWhiteColor(themeMode))),
                       const SizedBox(width: 2.5,),
                       RotatedBox(
                           quarterTurns: quarterTurns,

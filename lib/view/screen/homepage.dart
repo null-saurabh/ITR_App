@@ -150,10 +150,10 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
-                    child: const Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
+                        const Padding(
                           padding:
                               EdgeInsets.only(left: 22.0, top: 15, bottom: 15),
                           child: Text(
@@ -165,16 +165,16 @@ class _HomePageState extends State<HomePage> {
                         HomePageListTile(
                           title: "Start Income Tax\nFilling",
                           image: "assets/images/startFillingImage.png",
-                          icon: Icon(Icons.navigate_next),
+                          icon: Icon(Icons.navigate_next,color: greyAndWhiteColor(themeMode),),
                           price: "₹599",
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         HomePageListTile(
                             title: "How It Works",
                             image: "assets/images/questionMark.png",
-                            icon: Icon(Icons.navigate_next)),
+                            icon: Icon(Icons.navigate_next,color: greyAndWhiteColor(themeMode))),
                       ],
                     )),
               ],

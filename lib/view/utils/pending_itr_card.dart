@@ -40,10 +40,12 @@ class PendingItrCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text(order.person!.name,style: TextStyle(fontSize: 17,fontWeight: FontWeight.w600),),
+                const SizedBox(height: 10,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(formatYear(DateTime.parse(order.createdAt)),style: TextStyle(color: selectPersonPageTitleColor(themeMode),fontSize: 17,fontWeight: FontWeight.w600)),
+                    Text(formatYear(DateTime.parse(order.createdAt)),style: TextStyle(color: selectPersonPageTitleColor(themeMode),fontSize: 16,fontWeight: FontWeight.w600)),
                     if(order.orderStatus == "ITR_Filed")
                     Container(
 
@@ -65,9 +67,7 @@ class PendingItrCard extends StatelessWidget {
 
                   ],
                 ),
-                const SizedBox(height: 10,),
-                Text(order.person!.name,style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),),
-                const SizedBox(height: 10,),
+                const SizedBox(height: 5),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
 

@@ -11,6 +11,10 @@ Color blackAndWhiteColor(ThemeMode mode) {
   return mode == ThemeMode.dark ? Colors.white : Colors.black;
 }
 
+Color greyAndWhiteColor(ThemeMode mode) {
+  return mode == ThemeMode.dark ? Colors.white : Colors.grey;
+}
+
 Color homePageContainerColor(ThemeMode mode) {
   return mode == ThemeMode.dark ? const Color(0xFF313B42) : Colors.white;
 }

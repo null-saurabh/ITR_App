@@ -252,7 +252,8 @@ class OrderForDashboard {
   final bool seen;
   final String createdAt;
   final String updatedAt;
-  final Expert? expert; // Nullable field for orders with "assignExpert" status
+  final Expert? expert;// Nullable field for orders with "assignExpert" status
+  final Person? person;
 
   OrderForDashboard({
     required this.id,
@@ -265,6 +266,7 @@ class OrderForDashboard {
     required this.createdAt,
     required this.updatedAt,
     this.expert,
+    this.person,
   });
 
   factory OrderForDashboard.fromJson(Map<String, dynamic> json) {
@@ -279,6 +281,7 @@ class OrderForDashboard {
       createdAt: json['createdAt'] ?? '',
       updatedAt: json['updatedAt'] ?? '',
       expert: json['expert'] != null ? Expert.fromJson(json['expert']) : null,
+      person: json['person'] != null ? Person.fromJson(json['person'][0]) : null,
     );
   }
 }

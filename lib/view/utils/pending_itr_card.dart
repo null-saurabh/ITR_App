@@ -36,8 +36,9 @@ class PendingItrCard extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(top: 15.0,left: 15,right: 20,bottom: 15),
           child: SizedBox(
-            height: 100,
+            height: 110,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -64,7 +65,9 @@ class PendingItrCard extends StatelessWidget {
 
                   ],
                 ),
-                const SizedBox(height: 15,),
+                const SizedBox(height: 10,),
+                Text(order.person!.name,style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),),
+                const SizedBox(height: 10,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
 

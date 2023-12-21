@@ -78,25 +78,6 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 SizedBox(height: MediaQuery.of(context).size.height * 0.15),
-                // if(Provider.of<ApiProvider>(context).ordersForDashboard != null &&  Provider.of<ApiProvider>(context).ordersForDashboard!.isNotEmpty)
-                // TextButton(
-                //     onPressed: () {
-                //       Navigator.push(
-                //           context,
-                //           MaterialPageRoute(
-                //               builder: (context) => const PendingItr()));
-                //     },
-                //     child: const Row(
-                //       mainAxisSize: MainAxisSize.min,
-                //       children: [
-                //         Text(
-                //           "Pending ITRs ",
-                //           style:
-                //               TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                //         ),
-                //         Icon(Icons.arrow_forward_rounded)
-                //       ],
-                //     )),
                 Consumer<ApiProvider>(
                   builder: (context, apiProvider, _) {
                     return  Container(
@@ -275,11 +256,3 @@ class HomePageListTile extends StatelessWidget {
   }
 }
 
-// onPressed: () {
-// Navigator.push(
-// context,
-// MaterialPageRoute(
-// builder: (context) => const PendingItr(),
-// ),
-// );
-// },

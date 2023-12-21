@@ -22,6 +22,7 @@ class _HomePageState extends State<HomePage> {
         ? ThemeMode.dark
         : ThemeMode.light;
     Provider.of<ApiProvider>(context, listen: false).updateOrdersForDashboard();
+
     return Scaffold(
       floatingActionButton: const CustomFAB(),
       drawer: const DrawerUi(),
@@ -96,76 +97,77 @@ class _HomePageState extends State<HomePage> {
                 //         Icon(Icons.arrow_forward_rounded)
                 //       ],
                 //     )),
-                Container(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    height: 375,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
-                      borderRadius: BorderRadius.circular(8),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          blurRadius: 7,
-                          offset:
+                Consumer<ApiProvider>(
+                  builder: (context, apiProvider, _) {
+                    return  Container(
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        height:(apiProvider.ordersForDashboard != null &&
+                            apiProvider.ordersForDashboard!.isNotEmpty) ?345:265,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primary,
+                          borderRadius: BorderRadius.circular(8),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              blurRadius: 7,
+                              offset:
                               const Offset(0, 0), // changes position of shadow
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Padding(
-                          padding:
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Padding(
+                              padding:
                               EdgeInsets.only(left: 22.0, top: 15, bottom: 15),
-                          child: Text(
-                            "File Your Income Tax Return",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 16),
-                          ),
-                        ),
-                        Consumer<ApiProvider>(
-                          builder: (context, apiProvider, _) {
+                              child: Text(
+                                "File Your Income Tax Return",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 16),
+                              ),
+                            ),
                             if (apiProvider.ordersForDashboard != null &&
-                                apiProvider.ordersForDashboard!.isNotEmpty) {
-                              return HomePageListTile(
-                                title: "Pending ITRs",
-                                image: "assets/images/startFillingImage.png",
-                                icon: Icon(
-                                  Icons.navigate_next,
-                                  color: greyAndWhiteColor(themeMode),
-                                ),
-                                price: apiProvider.ordersForDashboard!.length
-                                    .toString(),
-                                navigateToPage: const PendingItr(),
-                              );
-                            } else {
-                              return const SizedBox();
-                            }
-                          },
-                        ),
-                        const SizedBox(height: 20),
-                        HomePageListTile(
-                          title: "Start Income Tax\nFilling",
-                          image: "assets/images/startFillingImage.png",
-                          icon: Icon(
-                            Icons.navigate_next,
-                            color: greyAndWhiteColor(themeMode),
-                          ),
-                          price: "₹599",
-                          navigateToPage: const SelectPerson(),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        HomePageListTile(
-                          title: "How It Works",
-                          image: "assets/images/questionMark.png",
-                          icon: Icon(Icons.navigate_next,
-                              color: greyAndWhiteColor(themeMode)),
-                          navigateToPage: const HowItWorks(),
-                        ),
-                      ],
-                    )),
+                                apiProvider.ordersForDashboard!.isNotEmpty)
+                            HomePageListTile(
+                              title: "Pending ITRs",
+                              image: "assets/images/startFillingImage.png",
+                              icon: Icon(
+                                Icons.navigate_next,
+                                color: greyAndWhiteColor(themeMode),
+                              ),
+                              price: apiProvider.ordersForDashboard!.length
+                                  .toString(),
+                              navigateToPage: const PendingItr(),
+                            ),
+                            if (apiProvider.ordersForDashboard != null &&
+                                apiProvider.ordersForDashboard!.isNotEmpty)
+                              const SizedBox(height: 20,),
+                            HomePageListTile(
+                              title: "Start Income Tax\nFilling",
+                              image: "assets/images/startFillingImage.png",
+                              icon: Icon(
+                                Icons.navigate_next,
+                                color: greyAndWhiteColor(themeMode),
+                              ),
+                              price: "₹599",
+                              navigateToPage: const SelectPerson(),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            HomePageListTile(
+                              title: "How It Works",
+                              image: "assets/images/questionMark.png",
+                              icon: Icon(Icons.navigate_next,
+                                  color: greyAndWhiteColor(themeMode)),
+                              navigateToPage: const HowItWorks(),
+                            ),
+                          ],
+                        ));
+                  },
+                ),
+
               ],
             ),
           ),
